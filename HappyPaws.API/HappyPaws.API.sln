@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.API", "HappyPaws.API\HappyPaws.API.csproj", "{DCB64408-5498-4E9D-B31B-D00B70BAC7E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.API.Core", "HappyPaws.API.Core\HappyPaws.API.Core.csproj", "{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.API.Services", "HappyPaws.API.Services\HappyPaws.API.Services.csproj", "{499D0A50-91F2-4439-A27B-2C33DE376A48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.API.Infrastructure", "HappyPaws.API.Infrastructure\HappyPaws.API.Infrastructure.csproj", "{BA5D8679-16BB-4E31-B39B-8FE314652040}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCB64408-5498-4E9D-B31B-D00B70BAC7E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCB64408-5498-4E9D-B31B-D00B70BAC7E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCB64408-5498-4E9D-B31B-D00B70BAC7E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCB64408-5498-4E9D-B31B-D00B70BAC7E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{499D0A50-91F2-4439-A27B-2C33DE376A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499D0A50-91F2-4439-A27B-2C33DE376A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499D0A50-91F2-4439-A27B-2C33DE376A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499D0A50-91F2-4439-A27B-2C33DE376A48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA5D8679-16BB-4E31-B39B-8FE314652040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA5D8679-16BB-4E31-B39B-8FE314652040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA5D8679-16BB-4E31-B39B-8FE314652040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA5D8679-16BB-4E31-B39B-8FE314652040}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1EC490C8-7B03-499C-806A-4819F5C4927D}
+	EndGlobalSection
+EndGlobal
