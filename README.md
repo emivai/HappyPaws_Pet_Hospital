@@ -10,26 +10,26 @@ Klinikos klientas, norėdamas naudotis šia platforma, prisiregistruos prie inte
 
 ## 1.2. Funkciniai reikalavimai
 
-Neprisijungęs naudotojas galės:
+### Neprisijungęs naudotojas galės:
 1.	Peržiūrėti sistemos reprezentacinį puslapį
 2.	Užsiregistruoti 
 3.	Prisijungti prie savo paskyros
 
-Prisijungęs naudotojas galės:
+### Prisijungęs naudotojas galės:
 1.	Valdyti savo augintinių profilius:
-1.1.	Pridėti augintinį
-1.2.	Redaguoti augintinio informaciją
-1.3.	Ištrinti augintinio profilį
-1.4.	Peržiūrėti augintinių profilius
-2.	Peržiūrėti gydytojų darbo tvarkaraščius
-3.	Peržiūrėti klinikos paslaugas
-4.	Registruoti augintinį vizitui pas gydytoją
-5.	Atsijungti
+  1.1.	Pridėti augintinį
+  1.2.	Redaguoti augintinio informaciją
+  1.3.	Ištrinti augintinio profilį
+  1.4.	Peržiūrėti augintinių profilius
+3.	Peržiūrėti gydytojų darbo tvarkaraščius
+4.	Peržiūrėti klinikos paslaugas
+5.	Registruoti augintinį vizitui pas gydytoją
+6.	Atsijungti
 
-Administratorius galės:
+### Administratorius galės:
 1.	Peržiūrėti registruotų klientų paskyras
 2.	Šalinti registruotų klientų paskyras
 3.	Peržiūrėti, redaguoti ir trinti klinikos duomenis:
-3.1.	Gydytojus
-3.2.	Gydytojų darbo tvarkaraščius
-3.3.	Klinikos teikiamas paslaugas
+  3.1.	Gydytojus
+  3.2.	Gydytojų darbo tvarkaraščius
+  3.3.	Klinikos teikiamas paslaugas
