@@ -4,12 +4,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.API", "HappyPaws.API\HappyPaws.API.csproj", "{DCB64408-5498-4E9D-B31B-D00B70BAC7E4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{499D0A50-91F2-4439-A27B-2C33DE376A48} = {499D0A50-91F2-4439-A27B-2C33DE376A48}
+		{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157} = {9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}
+		{BA5D8679-16BB-4E31-B39B-8FE314652040} = {BA5D8679-16BB-4E31-B39B-8FE314652040}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.API.Core", "HappyPaws.API.Core\HappyPaws.API.Core.csproj", "{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.API.Core", "HappyPaws.API.Core\HappyPaws.API.Core.csproj", "{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.API.Services", "HappyPaws.API.Services\HappyPaws.API.Services.csproj", "{499D0A50-91F2-4439-A27B-2C33DE376A48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.API.Services", "HappyPaws.API.Services\HappyPaws.API.Services.csproj", "{499D0A50-91F2-4439-A27B-2C33DE376A48}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157} = {9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPaws.API.Infrastructure", "HappyPaws.API.Infrastructure\HappyPaws.API.Infrastructure.csproj", "{BA5D8679-16BB-4E31-B39B-8FE314652040}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.API.Infrastructure", "HappyPaws.API.Infrastructure\HappyPaws.API.Infrastructure.csproj", "{BA5D8679-16BB-4E31-B39B-8FE314652040}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157} = {9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
