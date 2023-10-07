@@ -1,4 +1,4 @@
-﻿namespace HappyPaws.API.Services.Interfaces
+﻿namespace HappyPaws.API.Application.Interfaces
 {
     public interface IDoctorService
     {

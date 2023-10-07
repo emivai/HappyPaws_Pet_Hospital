@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.API", "HappyPaws.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.API.Core", "HappyPaws.API.Core\HappyPaws.API.Core.csproj", "{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.API.Services", "HappyPaws.API.Services\HappyPaws.API.Services.csproj", "{499D0A50-91F2-4439-A27B-2C33DE376A48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyPaws.API.Application", "HappyPaws.API.Services\HappyPaws.API.Application.csproj", "{499D0A50-91F2-4439-A27B-2C33DE376A48}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9D97F7BB-1AE2-4FF9-95CA-0546BC59D157} = {9D97F7BB-1AE2-4FF9-95CA-0546BC59D157}
 	EndProjectSection

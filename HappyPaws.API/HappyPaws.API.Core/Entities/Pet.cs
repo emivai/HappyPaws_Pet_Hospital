@@ -1,5 +1,4 @@
 ﻿using HappyPaws.API.Core.Enums;
-using System;
 
 namespace HappyPaws.API.Core.Entities
 {
@@ -9,7 +8,7 @@ namespace HappyPaws.API.Core.Entities
         public AnimalType Type { get; set; }
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
-        public string Photo { get; set; }
+        public string? Photo { get; set; }
         public User Owner { get; set; }
     }
 }

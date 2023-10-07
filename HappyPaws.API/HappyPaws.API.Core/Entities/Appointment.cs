@@ -1,6 +1,4 @@
 ﻿using HappyPaws.API.Core.Enums;
-using System;
-using System.Threading;
 
 namespace HappyPaws.API.Core.Entities
 {

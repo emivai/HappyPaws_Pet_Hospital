@@ -1,4 +1,4 @@
-﻿namespace HappyPaws.API.Services
+﻿namespace HappyPaws.API.Application
 {
     public class ConfigureServices
     {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HappyPaws.API.Core.Entities
+﻿namespace HappyPaws.API.Core.Entities
 {
     public class Doctor
     {
@@ -9,7 +7,7 @@ namespace HappyPaws.API.Core.Entities
         public string Surname { get; set; }
         public int Email { get; set; }
         public int PhoneNumber { get; set; }
-        public string Description { get; set; }
-        public string Photo { get; set; }
+        public string? Description { get; set; }
+        public string? Photo { get; set; }
     }
 }

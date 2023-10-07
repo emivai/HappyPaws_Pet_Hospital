@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HappyPaws.API.Core.Entities
+﻿namespace HappyPaws.API.Core.Entities
 {
     public class Procedure
     {
