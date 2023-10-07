@@ -1,0 +1,28 @@
+﻿using HappyPaws.Core.Entities;
+using HappyPaws.Core.Enums;
+
+namespace HappyPaws.API.Contracts.Responses
+{
+    public class UserResponse
+    {
+        public Guid Id { get; set; }
+        public UserType Type { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public static UserResponse FromDomain(User user)
+        {
+            return new UserResponse
+            {
+                Id = user.Id,
+                Type = user.Type,
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+            };
+        }
+    }
+}
