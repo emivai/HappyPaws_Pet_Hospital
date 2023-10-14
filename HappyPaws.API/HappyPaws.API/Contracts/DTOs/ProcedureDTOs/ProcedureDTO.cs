@@ -1,17 +1,17 @@
 ﻿using HappyPaws.Core.Entities;
 
-namespace HappyPaws.API.Contracts.Responses
+namespace HappyPaws.API.Contracts.DTOs.ProcedureDTOs
 {
-    public class ProcedureResponse
+    public class ProcedureDTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
 
-        public static ProcedureResponse FromDomain(Procedure procedure)
+        public static ProcedureDTO FromDomain(Procedure procedure)
         {
-            return new ProcedureResponse
+            return new ProcedureDTO
             {
                 Id = procedure.Id,
                 Name = procedure.Name,

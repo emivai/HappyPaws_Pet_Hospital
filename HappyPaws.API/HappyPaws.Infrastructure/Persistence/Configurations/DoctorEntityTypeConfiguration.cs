@@ -9,6 +9,8 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
     {
         public override void Configure(EntityTypeBuilder<Doctor> builder)
         {
+            builder.ToTable("doctors");
+
             base.Configure(builder);
 
             builder.Property(p => p.Name).HasColumnName("name");

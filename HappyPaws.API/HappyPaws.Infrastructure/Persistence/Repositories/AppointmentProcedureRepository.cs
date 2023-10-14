@@ -16,6 +16,7 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
         public async Task<AppointmentProcedure> AddAsync(AppointmentProcedure appointmentProcedure)
         {
             _context.AppointmentProcedures.Add(appointmentProcedure);
+
             await _context.SaveChangesAsync();
 
             return appointmentProcedure;
@@ -48,8 +49,8 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
 
             if (fromDb != null)
             {
-                fromDb.Procedure ??= appointmentProcedure.Procedure;
-                fromDb.Appointment ??= appointmentProcedure.Appointment;
+                fromDb.ProcedureId = appointmentProcedure.ProcedureId;
+                fromDb.AppointmentId = appointmentProcedure.AppointmentId;
             }
 
             await _context.SaveChangesAsync();

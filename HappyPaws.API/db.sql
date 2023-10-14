@@ -51,6 +51,9 @@ CREATE TABLE time_slots (
    	CONSTRAINT fk_doctor FOREIGN KEY(doctor_id) REFERENCES doctors(id) 
 );  
 
+CREATE UNIQUE INDEX idx_time_slot_beginning_ending_doctor
+ON time_slots(beginning, ending, doctor_id);
+
 CREATE TABLE appointments (
 	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 	price decimal not null,
@@ -79,3 +82,6 @@ CREATE TABLE appointment_procedures (
    	CONSTRAINT fk_procedure FOREIGN KEY(procedure_id) REFERENCES procedures(id),
 	CONSTRAINT fk_appointment FOREIGN KEY(appointment_id) REFERENCES appointments(id)
 );
+
+CREATE UNIQUE INDEX idx_appointment_procedure_procedure_appointment
+ON appointment_procedures(procedure_id, appointment_id);

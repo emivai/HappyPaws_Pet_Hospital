@@ -48,10 +48,10 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
 
             if (fromDb != null)
             {
-                fromDb.Name ??= user.Name;
-                fromDb.Surname ??= user.Surname;
-                fromDb.Email ??= user.Email;
-                fromDb.PhoneNumber ??= user.PhoneNumber;
+                fromDb.Name = user.Name;
+                fromDb.Surname = user.Surname;
+                fromDb.Email = user.Email;
+                fromDb.PhoneNumber = user.PhoneNumber;
             }
 
             await _context.SaveChangesAsync();

@@ -1,16 +1,16 @@
 ﻿using HappyPaws.Core.Entities;
 
-namespace HappyPaws.API.Contracts.Responses
+namespace HappyPaws.API.Contracts.DTOs.NoteDTOs
 {
-    public class NoteResponse
+    public class NoteDTO
     {
         public Guid Id { get; set; }
         public string Value { get; set; }
         public Guid AppointmentId { get; set; }
 
-        public static NoteResponse FromDomain(Note note)
+        public static NoteDTO FromDomain(Note note)
         {
-            return new NoteResponse
+            return new NoteDTO
             {
                 Id = note.Id,
                 Value = note.Value,

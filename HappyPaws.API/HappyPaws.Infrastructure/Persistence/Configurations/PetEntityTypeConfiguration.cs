@@ -9,6 +9,8 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
     {
         public override void Configure(EntityTypeBuilder<Pet> builder)
         {
+            builder.ToTable("pets");
+
             base.Configure(builder);
 
             builder.Property(p => p.Type).HasColumnName("type").HasConversion<int>();

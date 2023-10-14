@@ -1,8 +1,8 @@
 ﻿using HappyPaws.Core.Entities;
 
-namespace HappyPaws.API.Contracts.Responses
+namespace HappyPaws.API.Contracts.DTOs.TimeSlotDTOs
 {
-    public class TimeSlotResponse
+    public class TimeSlotDTO
     {
         public Guid Id { get; set; }
         public DateTime Start { get; set; }
@@ -10,9 +10,9 @@ namespace HappyPaws.API.Contracts.Responses
         public bool Available { get; set; }
         public Guid DoctorId { get; set; }
 
-        public static TimeSlotResponse FromDomain(TimeSlot timeSlot)
+        public static TimeSlotDTO FromDomain(TimeSlot timeSlot)
         {
-            return new TimeSlotResponse
+            return new TimeSlotDTO
             {
                 Id = timeSlot.Id,
                 Start = timeSlot.Start,

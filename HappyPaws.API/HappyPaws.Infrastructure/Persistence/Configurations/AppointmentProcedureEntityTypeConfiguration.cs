@@ -9,6 +9,8 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
     {
         public override void Configure(EntityTypeBuilder<AppointmentProcedure> builder)
         {
+            builder.ToTable("appointment_procedures");
+
             base.Configure(builder);
 
             builder.Property(p => p.ProcedureId).HasColumnName("procedure_id");

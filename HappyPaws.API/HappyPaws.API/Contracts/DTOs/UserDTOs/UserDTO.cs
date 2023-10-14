@@ -1,9 +1,9 @@
 ﻿using HappyPaws.Core.Entities;
 using HappyPaws.Core.Enums;
 
-namespace HappyPaws.API.Contracts.Responses
+namespace HappyPaws.API.Contracts.DTOs.UserDTOs
 {
-    public class UserResponse
+    public class UserDTO
     {
         public Guid Id { get; set; }
         public UserType Type { get; set; }
@@ -12,9 +12,9 @@ namespace HappyPaws.API.Contracts.Responses
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
 
-        public static UserResponse FromDomain(User user)
+        public static UserDTO FromDomain(User user)
         {
-            return new UserResponse
+            return new UserDTO
             {
                 Id = user.Id,
                 Type = user.Type,

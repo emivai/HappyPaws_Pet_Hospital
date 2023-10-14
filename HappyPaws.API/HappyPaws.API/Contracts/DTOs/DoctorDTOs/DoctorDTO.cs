@@ -1,8 +1,8 @@
 ﻿using HappyPaws.Core.Entities;
 
-namespace HappyPaws.API.Contracts.Responses
+namespace HappyPaws.API.Contracts.DTOs.DoctorDTOs
 {
-    public class DoctorResponse
+    public class DoctorDTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -12,9 +12,9 @@ namespace HappyPaws.API.Contracts.Responses
         public string? Description { get; set; }
         public string? Photo { get; set; }
 
-        public static DoctorResponse FromDomain(Doctor doctor)
+        public static DoctorDTO FromDomain(Doctor doctor)
         {
-            return new DoctorResponse
+            return new DoctorDTO
             {
                 Id = doctor.Id,
                 Name = doctor.Name,

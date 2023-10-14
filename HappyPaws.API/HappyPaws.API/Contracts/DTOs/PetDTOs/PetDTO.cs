@@ -1,9 +1,9 @@
 ﻿using HappyPaws.Core.Entities;
 using HappyPaws.Core.Enums;
 
-namespace HappyPaws.API.Contracts.Responses
+namespace HappyPaws.API.Contracts.DTOs.PetDTOs
 {
-    public class PetResponse
+    public class PetDTO
     {
         public Guid Id { get; set; }
         public AnimalType Type { get; set; }
@@ -12,9 +12,9 @@ namespace HappyPaws.API.Contracts.Responses
         public string? Photo { get; set; }
         public Guid OwnerId { get; set; }
 
-        public static PetResponse FromDomain(Pet pet)
+        public static PetDTO FromDomain(Pet pet)
         {
-            return new PetResponse
+            return new PetDTO
             {
                 Id = pet.Id,
                 Type = pet.Type,

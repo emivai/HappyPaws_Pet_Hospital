@@ -9,6 +9,8 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
     {
         public override void Configure(EntityTypeBuilder<Note> builder)
         {
+            builder.ToTable("notes");
+
             base.Configure(builder);
 
             builder.Property(p => p.Value).HasColumnName("value");

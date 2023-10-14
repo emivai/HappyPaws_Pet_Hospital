@@ -9,6 +9,8 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
     {
         public override void Configure(EntityTypeBuilder<TimeSlot> builder)
         {
+            builder.ToTable("time_slots");
+
             base.Configure(builder);
 
             builder.Property(p => p.Start).HasColumnName("beggining");
