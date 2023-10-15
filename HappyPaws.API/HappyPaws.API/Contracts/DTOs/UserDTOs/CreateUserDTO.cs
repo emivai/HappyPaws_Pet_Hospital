@@ -5,7 +5,7 @@ namespace HappyPaws.API.Contracts.DTOs.UserDTOs
 {
     public class CreateUserDTO
     {
-        public UserType Type { get; set; }
+        public UserType? Type { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
@@ -17,7 +17,7 @@ namespace HappyPaws.API.Contracts.DTOs.UserDTOs
         {
             return new User
             {
-                Type = userDTO.Type,
+                Type = (UserType)userDTO.Type,
                 Name = userDTO.Name,
                 Surname = userDTO.Surname,
                 Email = userDTO.Email,

@@ -1,7 +1,5 @@
-﻿using HappyPaws.API.Contracts.DTOs.NoteDTOs;
-using HappyPaws.API.Contracts.DTOs.TimeSlotDTOs;
+﻿using HappyPaws.API.Contracts.DTOs.TimeSlotDTOs;
 using HappyPaws.Application.Interfaces;
-using HappyPaws.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers

@@ -1,13 +1,13 @@
 ﻿using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Entities;
 using HappyPaws.Core.Interfaces;
-using System.Runtime.CompilerServices;
 
 namespace HappyPaws.Application.Services
 {
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly ITimeSlotRepository _timeSlotRepository;
 
         public AppointmentService(IAppointmentRepository appointmentRepository)
         {
@@ -16,11 +16,17 @@ namespace HappyPaws.Application.Services
 
         public async Task<Appointment> AddAsync(Appointment appointment)
         {
+            await ClaimTimeSlot(appointment);
+
             return await _appointmentRepository.AddAsync(appointment);
         }
 
         public async Task DeleteAsync(Guid id)
         {
+            var appointment = await GetAsync(id);
+
+            await VaccateTimeSlot(appointment);
+
             await _appointmentRepository.DeleteAsync(id);
         }
 
@@ -37,6 +43,24 @@ namespace HappyPaws.Application.Services
         public async Task<Appointment> UpdateAsync(Guid id, Appointment appointment)
         {
             return await _appointmentRepository.UpdateAsync(id, appointment);
+        }
+
+        private async Task ClaimTimeSlot(Appointment appointment)
+        {
+            var timeSlot = await _timeSlotRepository.GetAsync(appointment.TimeSlotId);
+
+            timeSlot.Available = false;
+
+            await _timeSlotRepository.UpdateAsync(appointment.TimeSlotId, timeSlot);
+        }
+
+        private async Task VaccateTimeSlot(Appointment appointment)
+        {
+            var timeSlot = await _timeSlotRepository.GetAsync(appointment.TimeSlotId);
+
+            timeSlot.Available = true;
+
+            await _timeSlotRepository.UpdateAsync(appointment.TimeSlotId, timeSlot);
         }
     }
 }

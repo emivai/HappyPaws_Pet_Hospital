@@ -1,6 +1,4 @@
 ﻿using HappyPaws.API.Contracts.DTOs.AppointmentDTOs;
-using HappyPaws.API.Contracts.DTOs.AppointmentProcedureDTOs;
-using HappyPaws.API.Contracts.DTOs.PetDTOs;
 using HappyPaws.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

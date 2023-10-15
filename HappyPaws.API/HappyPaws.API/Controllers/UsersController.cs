@@ -1,6 +1,5 @@
 ﻿using HappyPaws.API.Contracts.DTOs.UserDTOs;
 using HappyPaws.Application.Interfaces;
-using HappyPaws.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers

@@ -5,7 +5,7 @@ namespace HappyPaws.API.Contracts.DTOs.PetDTOs
 {
     public class CreatePetDTO
     {
-        public AnimalType Type { get; set; }
+        public AnimalType? Type { get; set; }
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
         public string? Photo { get; set; }
@@ -15,7 +15,7 @@ namespace HappyPaws.API.Contracts.DTOs.PetDTOs
         {
             return new Pet
             {
-                Type = petDTO.Type,
+                Type = (AnimalType)petDTO.Type,
                 Name = petDTO.Name,
                 BirthDate = petDTO.BirthDate,
                 Photo = petDTO.Photo,

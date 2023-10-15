@@ -1,7 +1,5 @@
 ﻿using HappyPaws.API.Contracts.DTOs.PetDTOs;
-using HappyPaws.API.Contracts.DTOs.UserDTOs;
 using HappyPaws.Application.Interfaces;
-using HappyPaws.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
@@ -79,5 +77,17 @@ namespace HappyPaws.API.Controllers
 
             return NoContent();
         }
+
+        //[HttpGet]
+        //[ProducesResponseType(typeof(IEnumerable<PetDTO>), (StatusCodes.Status200OK))]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<IActionResult> GetByOwnerAsync(Guid id)
+        //{
+        //    var pets = await _petsService.GetAllAsync();
+
+        //    var result = pets.Select(PetDTO.FromDomain).ToList();
+
+        //    return Ok(result);
+        //}
     }
 }
