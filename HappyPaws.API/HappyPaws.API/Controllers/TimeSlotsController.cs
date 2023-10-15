@@ -43,9 +43,9 @@ namespace HappyPaws.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(TimeSlotDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync(CreateTimeSlotDTO noteDTO)
+        public async Task<IActionResult> CreateAsync(CreateTimeSlotDTO timeSlotDTO)
         {
-            var created = await _timeSlotService.AddAsync(CreateTimeSlotDTO.ToDomain(noteDTO));
+            var created = await _timeSlotService.AddAsync(CreateTimeSlotDTO.ToDomain(timeSlotDTO));
 
             return StatusCode(StatusCodes.Status201Created, TimeSlotDTO.FromDomain(created));
         }
@@ -54,13 +54,13 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(typeof(TimeSlotDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateAsync(Guid id, UpdateTimeSlotDTO noteDTO)
+        public async Task<IActionResult> UpdateAsync(Guid id, UpdateTimeSlotDTO timeSlotDTO)
         {
             var timeSlot = _timeSlotService.GetAsync(id);
 
             if (timeSlot == null) return NotFound();
 
-            var updated = await _timeSlotService.UpdateAsync(id, UpdateTimeSlotDTO.ToDomain(noteDTO));
+            var updated = await _timeSlotService.UpdateAsync(id, UpdateTimeSlotDTO.ToDomain(timeSlotDTO));
 
             return Ok(TimeSlotDTO.FromDomain(updated));
         }

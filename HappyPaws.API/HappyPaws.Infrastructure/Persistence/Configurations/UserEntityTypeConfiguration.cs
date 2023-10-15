@@ -22,6 +22,10 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
             builder.Property(p => p.Email).HasColumnName("email");
 
             builder.Property(p => p.PhoneNumber).HasColumnName("phone_number");
+
+            builder.Property(p => p.Photo).HasColumnName("photo");
+
+            builder.Property(p => p.Description).HasColumnName("description");
         }
     }
 }

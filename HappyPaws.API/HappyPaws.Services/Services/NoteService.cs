@@ -28,11 +28,6 @@ namespace HappyPaws.Application.Services
             return await _noteRepository.GetAllAsync();
         }
 
-        public async Task<List<Note>> GetAllAsync(Guid petId, Guid appointmentId)
-        {
-            return await _noteRepository.GetAllAsync(petId, appointmentId);
-        }
-
         public async Task<Note> GetAsync(Guid id)
         {
             return await _noteRepository.GetAsync(id);

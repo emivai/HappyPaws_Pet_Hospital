@@ -38,18 +38,6 @@ namespace HappyPaws.API.Controllers
             return Ok(NoteDTO.FromDomain(note));
         }
 
-        [HttpGet("pets/{petId}/appointments/{appointmentId}")]
-        [ProducesResponseType(typeof(IEnumerable<NoteDTO>), (StatusCodes.Status200OK))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAsync(Guid petId, Guid appointmentId)
-        {
-            var notes = await _noteService.GetAllAsync(petId, appointmentId);
-
-            var result = notes.Select(NoteDTO.FromDomain).ToList();
-
-            return Ok(result);
-        }
-
         [HttpPost]
         [ProducesResponseType(typeof(NoteDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

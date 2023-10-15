@@ -10,7 +10,6 @@ namespace HappyPaws.Application
         {
             services.AddScoped<IAppointmentProcedureService, AppointmentProcedureService>()
                     .AddScoped<IAppointmentService, AppointmentService>()
-                    .AddScoped<IDoctorService, DoctorService>()
                     .AddScoped<INoteService, NoteService>()
                     .AddScoped<IPetService, PetService>()
                     .AddScoped<IProcedureService, ProcedureService>()

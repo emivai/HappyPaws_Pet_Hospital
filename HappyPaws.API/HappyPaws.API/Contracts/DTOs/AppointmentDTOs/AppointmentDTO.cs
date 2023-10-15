@@ -13,14 +13,17 @@ namespace HappyPaws.API.Contracts.DTOs.AppointmentDTOs
 
         public static AppointmentDTO FromDomain(Appointment appointment)
         {
-            return new AppointmentDTO
+            var appointmentDTO = new AppointmentDTO
             {
                 Id = appointment.Id,
-                Price = appointment.Price,
                 Status = appointment.Status,
                 PetId = appointment.PetId,
                 TimeSlotId = appointment.TimeSlotId
             };
+
+            appointment.CalculateTotalPrice();
+
+            return appointmentDTO;
         }
     }
 }

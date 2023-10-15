@@ -17,7 +17,7 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.AppointmentId).HasColumnName("appointment_id");
 
-            builder.HasOne(e => e.Appointment).WithMany().HasForeignKey(e => e.AppointmentId);
+            builder.HasOne(e => e.Appointment).WithMany(e => e.Notes).HasForeignKey(e => e.AppointmentId);
         }
     }
 }

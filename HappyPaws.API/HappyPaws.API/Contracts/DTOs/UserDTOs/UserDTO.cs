@@ -11,6 +11,8 @@ namespace HappyPaws.API.Contracts.DTOs.UserDTOs
         public string Surname { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public string? Description { get; set; }
+        public string? Photo { get; set; }
 
         public static UserDTO FromDomain(User user)
         {
@@ -21,7 +23,9 @@ namespace HappyPaws.API.Contracts.DTOs.UserDTOs
                 Name = user.Name,
                 Surname = user.Surname,
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                Description = user.Description,
+                Photo = user.Photo
             };
         }
     }

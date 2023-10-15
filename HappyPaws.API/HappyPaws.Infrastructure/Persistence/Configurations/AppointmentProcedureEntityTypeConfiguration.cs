@@ -19,7 +19,7 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
 
             builder.HasOne(e => e.Procedure).WithMany().HasForeignKey(e => e.ProcedureId);
 
-            builder.HasOne(e => e.Appointment).WithMany().HasForeignKey(e => e.AppointmentId);
+            builder.HasOne(e => e.Appointment).WithMany(e => e.AppointmentProcedures).HasForeignKey(e => e.AppointmentId);
         }
     }
 }

@@ -16,7 +16,6 @@ namespace HappyPaws.Infrastructure
 
             services.AddScoped<IAppointmentProcedureRepository, AppointmentProcedureRepository>()
                 .AddScoped<IAppointmentRepository, AppointmentRepository>()
-                .AddScoped<IDoctorRepository, DoctorRepository>()
                 .AddScoped<INoteRepository, NoteRepository>()
                 .AddScoped<IPetRepository, PetRepository>()
                 .AddScoped<IProcedureRepository, ProcedureRepository>()

@@ -1,6 +1,7 @@
 ﻿using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Entities;
 using HappyPaws.Core.Interfaces;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HappyPaws.Application.Services
 {

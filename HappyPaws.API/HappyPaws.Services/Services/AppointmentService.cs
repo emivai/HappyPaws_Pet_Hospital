@@ -1,6 +1,7 @@
 ﻿using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Entities;
 using HappyPaws.Core.Interfaces;
+using System.Runtime.CompilerServices;
 
 namespace HappyPaws.Application.Services
 {

@@ -5,7 +5,6 @@ namespace HappyPaws.API.Contracts.DTOs.AppointmentDTOs
 {
     public class UpdateAppointmentDTO
     {
-        public decimal Price { get; set; }
         public AppointmentStatus Status { get; set; }
         public Guid PetId { get; set; }
         public Guid TimeSlotId { get; set; }
@@ -14,7 +13,6 @@ namespace HappyPaws.API.Contracts.DTOs.AppointmentDTOs
         {
             return new Appointment
             {
-                Price = appointmentDTO.Price,
                 Status = appointmentDTO.Status,
                 PetId = appointmentDTO.PetId,
                 TimeSlotId = appointmentDTO.TimeSlotId

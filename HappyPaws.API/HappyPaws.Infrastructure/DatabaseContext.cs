@@ -8,7 +8,6 @@ namespace HappyPaws.Infrastructure
     {
         public DbSet<Appointment> Appointments => Set<Appointment>();
         public DbSet<AppointmentProcedure> AppointmentProcedures => Set<AppointmentProcedure>();
-        public DbSet<Doctor> Doctors => Set<Doctor>();
         public DbSet<Note> Notes => Set<Note>();
         public DbSet<Pet> Pets => Set<Pet>();
         public DbSet<Procedure> Procedures => Set<Procedure>();

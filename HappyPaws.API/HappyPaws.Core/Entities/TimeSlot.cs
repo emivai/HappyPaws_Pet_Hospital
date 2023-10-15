@@ -8,6 +8,8 @@ namespace HappyPaws.Core.Entities
         public DateTime End { get; set; }
         public bool Available { get; set; }
         public Guid DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
+        public User Doctor { get; set; }
+
+        public Appointment? Appointment { get; set; }
     }
 }

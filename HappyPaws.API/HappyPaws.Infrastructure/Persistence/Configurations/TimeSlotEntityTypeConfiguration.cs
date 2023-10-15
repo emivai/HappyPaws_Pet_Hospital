@@ -13,7 +13,7 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
 
             base.Configure(builder);
 
-            builder.Property(p => p.Start).HasColumnName("beggining");
+            builder.Property(p => p.Start).HasColumnName("beginning");
 
             builder.Property(p => p.End).HasColumnName("ending");
 
@@ -21,7 +21,7 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.DoctorId).HasColumnName("doctor_id");
 
-            builder.HasOne(e => e.Doctor).WithMany().HasForeignKey(e => e.DoctorId);
+            builder.HasOne(e => e.Doctor).WithMany(e => e.TimeSlots).HasForeignKey(e => e.DoctorId);
         }
     }
 }
