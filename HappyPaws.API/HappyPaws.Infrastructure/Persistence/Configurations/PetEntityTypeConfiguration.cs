@@ -23,7 +23,7 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.OwnerId).HasColumnName("owner_id");
 
-            builder.HasOne(e => e.Owner).WithMany(e => e.Pets).HasForeignKey(e => e.OwnerId);
+            builder.HasOne(e => e.Owner).WithMany(e => e.Pets).HasForeignKey(e => e.OwnerId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

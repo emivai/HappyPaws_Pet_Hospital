@@ -51,9 +51,19 @@ namespace HappyPaws.API.Controllers
         {
             var doctor = await _userService.GetAsync(timeSlotDTO.DoctorId);
 
-            if (doctor == null) return BadRequest("Invalid DoctorId. No such user exists.");
+            if (doctor == null) 
+                return BadRequest("Invalid DoctorId. No such user exists.");
 
-            if(doctor.Type != UserType.Doctor) return BadRequest("Invalid DoctorId. User has to be of type doctor.");
+            if(doctor.Type != UserType.Doctor) 
+                return BadRequest("Invalid DoctorId. User has to be of type doctor.");
+
+            var timeSlots = await _timeSlotService.GetAllAsync();
+
+            if (timeSlots.Exists(t => t.DoctorId == timeSlotDTO.DoctorId && t.Start == timeSlotDTO.Start && t.End == timeSlotDTO.End)) 
+                return BadRequest("Doctor cannot have timeslots repeated.");
+
+            if (timeSlots.Exists(t => t.DoctorId == timeSlotDTO.DoctorId && t.Start < timeSlotDTO.End && timeSlotDTO.Start < t.End))
+                return BadRequest("Doctor cannot have timeslots overlapping.");
 
             var created = await _timeSlotService.AddAsync(CreateTimeSlotDTO.ToDomain(timeSlotDTO));
 
@@ -66,15 +76,26 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync(Guid id, UpdateTimeSlotDTO timeSlotDTO)
         {
-            var timeSlot = _timeSlotService.GetAsync(id);
+            var timeSlot = await _timeSlotService.GetAsync(id);
 
             var doctor = await _userService.GetAsync(timeSlotDTO.DoctorId);
 
-            if (doctor == null) return BadRequest("Invalid DoctorId. No such user exists.");
+            if (doctor == null) 
+                return BadRequest("Invalid DoctorId. No such user exists.");
 
-            if (doctor.Type != UserType.Doctor) return BadRequest("Invalid DoctorId. User has to be of type doctor.");
+            if (doctor.Type != UserType.Doctor) 
+                return BadRequest("Invalid DoctorId. User has to be of type doctor.");
 
-            if (timeSlot == null) return NotFound($"Time slot with id {id} does not exist.");
+            if (timeSlot == null) 
+                return NotFound($"Time slot with id {id} does not exist.");
+
+            var timeSlots = await _timeSlotService.GetAllAsync();
+
+            if (timeSlots.Exists(t => t.DoctorId == timeSlotDTO.DoctorId && t.Start == timeSlotDTO.Start && t.End == timeSlotDTO.End))
+                return BadRequest("Doctor cannot have timeslots repeated.");
+
+            if (timeSlots.Exists(t => t.DoctorId == timeSlotDTO.DoctorId && t.Start < timeSlotDTO.End && timeSlotDTO.Start < t.End))
+                return BadRequest("Doctor cannot have timeslots overlapping.");
 
             var updated = await _timeSlotService.UpdateAsync(id, UpdateTimeSlotDTO.ToDomain(timeSlotDTO));
 
@@ -87,7 +108,7 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var timeSlot = _timeSlotService.GetAsync(id);
+            var timeSlot = await _timeSlotService.GetAsync(id);
 
             if (timeSlot == null) return NotFound($"Time slot with id {id} does not exist.");
 

@@ -19,9 +19,9 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.TimeSlotId).HasColumnName("time_slot_id");
 
-            builder.HasOne(e => e.Pet).WithMany(e => e.Appointments).HasForeignKey(e => e.PetId);
+            builder.HasOne(e => e.Pet).WithMany(e => e.Appointments).HasForeignKey(e => e.PetId).OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(e => e.TimeSlot).WithOne(e => e.Appointment).HasForeignKey<Appointment>(e => e.TimeSlotId);
+            builder.HasOne(e => e.TimeSlot).WithOne(e => e.Appointment).HasForeignKey<Appointment>(e => e.TimeSlotId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

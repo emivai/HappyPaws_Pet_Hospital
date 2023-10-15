@@ -23,7 +23,7 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
 
         public async Task DeleteAsync(Guid id)
         {
-            var fromDb = _context.Pets.FirstOrDefault(p => p.Id == id);
+            var fromDb = _context.Pets.Include(p => p.Appointments).ThenInclude(a => a.Notes).FirstOrDefault(p => p.Id == id);
 
             if (fromDb is null) return;
 

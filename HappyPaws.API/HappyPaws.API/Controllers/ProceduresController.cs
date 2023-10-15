@@ -35,7 +35,8 @@ namespace HappyPaws.API.Controllers
         {
             var procedure = await _procedureService.GetAsync(id);
 
-            if (procedure == null) return NotFound($"Procedure with id {id} does not exist.");
+            if (procedure == null) 
+                return NotFound($"Procedure with id {id} does not exist.");
 
             return Ok(ProcedureDTO.FromDomain(procedure));
         }
@@ -58,7 +59,8 @@ namespace HappyPaws.API.Controllers
         {
             var procedure = _procedureService.GetAsync(id);
 
-            if (procedure == null) return NotFound($"Procedure with id {id} does not exist.");
+            if (procedure == null) 
+                return NotFound($"Procedure with id {id} does not exist.");
 
             var updated = await _procedureService.UpdateAsync(id, UpdateProcedureDTO.ToDomain(noteDTO));
 
@@ -71,9 +73,10 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var procedure = _procedureService.GetAsync(id);
+            var procedure = await _procedureService.GetAsync(id);
 
-            if (procedure == null) return NotFound($"Procedure with id {id} does not exist.");
+            if (procedure == null) 
+                return NotFound($"Procedure with id {id} does not exist.");
 
             await _procedureService.DeleteAsync(id);
 

@@ -39,7 +39,8 @@ namespace HappyPaws.API.Controllers
         {
             var note = await _noteService.GetAsync(id);
 
-            if (note == null) return NotFound($"Note with id {id} does not exist.");
+            if (note == null)
+                return NotFound($"Note with id {id} does not exist.");
 
             return Ok(note);
         }
@@ -52,11 +53,13 @@ namespace HappyPaws.API.Controllers
         {
             var pet = await _petService.GetAsync(petId);
 
-            if (pet == null) return BadRequest("Invalid PetId. No such pet exists.");
+            if (pet == null) 
+                return BadRequest("Invalid PetId. No such pet exists.");
 
             var appointment = await _appointmentService.GetAsync(appointmentId);
 
-            if (appointment == null) return BadRequest("Invalid AppointmentId. No such appointment exists.");
+            if (appointment == null) 
+                return BadRequest("Invalid AppointmentId. No such appointment exists.");
 
             var notes = await _noteService.GetAllAsyncByPetAndAppointmentId(petId, appointmentId);
 
@@ -73,17 +76,20 @@ namespace HappyPaws.API.Controllers
         {
             var pet = await _petService.GetAsync(petId);
 
-            if (pet == null) return BadRequest("Invalid PetId. No such pet exists.");
+            if (pet == null) 
+                return BadRequest("Invalid PetId. No such pet exists.");
 
             var appointment = await _appointmentService.GetAsync(appointmentId);
 
-            if (appointment == null) return BadRequest("Invalid AppointmentId. No such appointment exists.");
+            if (appointment == null) 
+                return BadRequest("Invalid AppointmentId. No such appointment exists.");
 
             var note = await _noteService.GetAsyncByPetAndAppointmentId(petId, appointmentId, noteId);
 
-            if(note == null) return NotFound($"Note with id {noteId} does not exist.");
+            if(note == null) 
+                return NotFound($"Note with id {noteId} does not exist.");
 
-            return Ok(note);
+            return Ok(NoteDTO.FromDomain(note));
         }
 
         [Route("[controller]")]
@@ -94,7 +100,8 @@ namespace HappyPaws.API.Controllers
         {
             var appointment = await _appointmentService.GetAsync(noteDTO.AppointmentId);
 
-            if (appointment == null) return BadRequest("Invalid AppointmentId. No such appointment exists.");
+            if (appointment == null) 
+                return BadRequest("Invalid AppointmentId. No such appointment exists.");
 
             var created = await _noteService.AddAsync(CreateNoteDTO.ToDomain(noteDTO));
 
@@ -109,7 +116,8 @@ namespace HappyPaws.API.Controllers
         {
             var note = _noteService.GetAsync(id);
 
-            if (note == null) return NotFound($"Note with id {id} does not exist.");
+            if (note == null) 
+                return NotFound($"Note with id {id} does not exist.");
 
             var updated = await _noteService.UpdateAsync(id, UpdateNoteDTO.ToDomain(noteDTO));
 
@@ -123,9 +131,10 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var note = _noteService.GetAsync(id);
+            var note = await _noteService.GetAsync(id);
 
-            if (note == null) return NotFound($"Note with id {id} does not exist.");
+            if (note == null) 
+                return NotFound($"Note with id {id} does not exist.");
 
             await _noteService.DeleteAsync(id);
 

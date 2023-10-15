@@ -40,7 +40,8 @@ namespace HappyPaws.API.Controllers
         {
             var appointment = await _appointmentsService.GetAsync(id);
 
-            if (appointment == null) return NotFound($"Appointment with id {id} does not exist.");
+            if (appointment == null) 
+                return NotFound($"Appointment with id {id} does not exist.");
 
             return Ok(AppointmentDTO.FromDomain(appointment));
         }
@@ -52,7 +53,8 @@ namespace HappyPaws.API.Controllers
         {
             var pet = await _petService.GetAsync(petId);
 
-            if (pet == null) return BadRequest("Invalid PetId. No such pet exists");
+            if (pet == null) 
+                return BadRequest("Invalid PetId. No such pet exists");
 
             var appointments = await _appointmentsService.GetAllAsyncByPetId(petId);
 
@@ -67,7 +69,8 @@ namespace HappyPaws.API.Controllers
         {
             var pet = await _petService.GetAsync(petId);
 
-            if (pet == null) return BadRequest("Invalid PetId. No such pet exists");
+            if (pet == null) 
+                return BadRequest("Invalid PetId. No such pet exists");
 
             var appointment = await _appointmentsService.GetAsyncByPetId(petId, appointmentId);
 
@@ -82,11 +85,16 @@ namespace HappyPaws.API.Controllers
         {
             var timeSlot = await _timeSlotService.GetAsync(appointmentDTO.TimeSlotId);
 
-            if (timeSlot == null) return BadRequest("Invalid TimeSlotId. No such time slot exists");
+            if (timeSlot == null) 
+                return BadRequest("Invalid TimeSlotId. No such time slot exists");
+
+            if (!timeSlot.Available)
+                return BadRequest("This time slot is taken.");
 
             var pet = await _petService.GetAsync(appointmentDTO.PetId);
 
-            if (pet == null) return BadRequest("Invalid PetId. No such pet exists");
+            if (pet == null) 
+                return BadRequest("Invalid PetId. No such pet exists");
 
             var created = await _appointmentsService.AddAsync(CreateAppointmentDTO.ToDomain(appointmentDTO));
 
@@ -101,15 +109,21 @@ namespace HappyPaws.API.Controllers
         {
             var appointment = _appointmentsService.GetAsync(id);
 
-            if (appointment == null) return NotFound($"Appointment with id {id} does not exist.");
+            if (appointment == null) 
+                return NotFound($"Appointment with id {id} does not exist.");
 
             var timeSlot = await _timeSlotService.GetAsync(appointmentDTO.TimeSlotId);
 
-            if (timeSlot == null) return BadRequest("Invalid TimeSlotId. No such time slot exists");
+            if (timeSlot == null)
+                return BadRequest("Invalid TimeSlotId. No such time slot exists");
+
+            if (!timeSlot.Available)
+                return BadRequest("This time slot is taken.");
 
             var pet = await _petService.GetAsync(appointmentDTO.PetId);
 
-            if (pet == null) return BadRequest("Invalid PetId. No such pet exists");
+            if (pet == null) 
+                return BadRequest("Invalid PetId. No such pet exists");
 
             var updated = await _appointmentsService.UpdateAsync(id, UpdateAppointmentDTO.ToDomain(appointmentDTO));
 
@@ -123,9 +137,10 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var appointment = _appointmentsService.GetAsync(id);
+            var appointment = await _appointmentsService.GetAsync(id);
 
-            if (appointment == null) return NotFound($"Appointment with id {id} does not exist.");
+            if (appointment == null) 
+                return NotFound($"Appointment with id {id} does not exist.");
 
             await _appointmentsService.DeleteAsync(id);
 

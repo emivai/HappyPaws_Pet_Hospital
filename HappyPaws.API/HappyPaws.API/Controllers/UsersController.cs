@@ -36,7 +36,8 @@ namespace HappyPaws.API.Controllers
         {
             var user = await _usersService.GetAsync(id);
 
-            if (user == null) return NotFound($"User with id {id} does not exist.");
+            if (user == null) 
+                return NotFound($"User with id {id} does not exist.");
 
             return Ok(UserDTO.FromDomain(user));
         }
@@ -59,7 +60,8 @@ namespace HappyPaws.API.Controllers
         {
             var user = _usersService.GetAsync(id);
 
-            if (user == null) return NotFound($"User with id {id} does not exist.");
+            if (user == null) 
+                return NotFound($"User with id {id} does not exist.");
 
             var updated = await _usersService.UpdateAsync(id, UpdateUserDTO.ToDomain(userDTO));
 
@@ -72,9 +74,10 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var user = _usersService.GetAsync(id);
+            var user = await _usersService.GetAsync(id);
 
-            if (user == null) return NotFound($"User with id {id} does not exist.");
+            if (user == null) 
+                return NotFound($"User with id {id} does not exist.");
 
             await _usersService.DeleteAsync(id);
 

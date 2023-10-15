@@ -1,5 +1,6 @@
 ﻿using HappyPaws.API.Contracts.DTOs.AppointmentProcedureDTOs;
 using HappyPaws.Application.Interfaces;
+using HappyPaws.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
@@ -59,6 +60,10 @@ namespace HappyPaws.API.Controllers
 
             if (procedure == null) return BadRequest("Invalid ProcedureId. No such procedure exists.");
 
+            var appointments = await _appointmentProceduresService.GetAllAsync();
+
+            if(appointments.Exists(a => a.ProcedureId == appointmentProcedureDTO.ProcedureId && a.AppointmentId == appointmentProcedureDTO.AppointmentId)) return BadRequest("Appointment cannot contain the same procedure more than once.");
+
             var created = await _appointmentProceduresService.AddAsync(CreateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO));
 
             return StatusCode(StatusCodes.Status201Created, AppointmentProcedureDTO.FromDomain(created));
@@ -82,6 +87,10 @@ namespace HappyPaws.API.Controllers
 
             if (procedure == null) return BadRequest("Invalid ProcedureId. No such procedure exists.");
 
+            var appointments = await _appointmentProceduresService.GetAllAsync();
+
+            if (appointments.Exists(a => a.ProcedureId == appointmentProcedureDTO.ProcedureId && a.AppointmentId == appointmentProcedureDTO.AppointmentId)) return BadRequest("Appointment cannot contain the same procedure more than once.");
+
             var updated = await _appointmentProceduresService.UpdateAsync(id, UpdateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO));
 
             return Ok(AppointmentProcedureDTO.FromDomain(updated));
@@ -93,7 +102,7 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var appointmentProcedure = _appointmentProceduresService.GetAsync(id);
+            var appointmentProcedure = await _appointmentProceduresService.GetAsync(id);
 
             if (appointmentProcedure == null) return NotFound($"Appointment procedure with id {id} does not exist.");
 

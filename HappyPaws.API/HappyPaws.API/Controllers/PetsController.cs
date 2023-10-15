@@ -38,7 +38,8 @@ namespace HappyPaws.API.Controllers
         {
             var pet = await _petsService.GetAsync(id);
 
-            if (pet == null) return NotFound($"Pet with id {id} does not exist.");
+            if (pet == null) 
+                return NotFound($"Pet with id {id} does not exist.");
 
             return Ok(PetDTO.FromDomain(pet));
         }
@@ -50,9 +51,11 @@ namespace HappyPaws.API.Controllers
         {
             var owner = await _usersService.GetAsync(petDTO.OwnerId);
 
-            if (owner == null) return BadRequest("Invalid OwnerId. No such user exists.");
+            if (owner == null) 
+                return BadRequest("Invalid OwnerId. No such user exists.");
 
-            if (owner.Type != UserType.Client) return BadRequest("Invalid OwnerId. Only users of type Client can own pets.");
+            if (owner.Type != UserType.Client) 
+                return BadRequest("Invalid OwnerId. Only users of type Client can own pets.");
 
             var created = await _petsService.AddAsync(CreatePetDTO.ToDomain(petDTO));
 
@@ -67,7 +70,8 @@ namespace HappyPaws.API.Controllers
         {
             var pet = _petsService.GetAsync(id);
 
-            if (pet == null) return NotFound($"Pet with id {id} does not exist.");
+            if (pet == null) 
+                return NotFound($"Pet with id {id} does not exist.");
 
             var updated = await _petsService.UpdateAsync(id, UpdatePetDTO.ToDomain(petDTO));
 
@@ -80,25 +84,14 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var pet = _petsService.GetAsync(id);
+            var pet = await _petsService.GetAsync(id);
 
-            if (pet == null) return NotFound($"Pet with id {id} does not exist.");
+            if (pet == null) 
+                return NotFound($"Pet with id {id} does not exist.");
 
             await _petsService.DeleteAsync(id);
 
             return NoContent();
         }
-
-        //[HttpGet]
-        //[ProducesResponseType(typeof(IEnumerable<PetDTO>), (StatusCodes.Status200OK))]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //public async Task<IActionResult> GetByOwnerAsync(Guid id)
-        //{
-        //    var pets = await _petsService.GetAllAsync();
-
-        //    var result = pets.Select(PetDTO.FromDomain).ToList();
-
-        //    return Ok(result);
-        //}
     }
 }
