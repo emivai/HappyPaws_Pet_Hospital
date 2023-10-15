@@ -9,9 +9,10 @@ namespace HappyPaws.Application.Services
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly ITimeSlotRepository _timeSlotRepository;
 
-        public AppointmentService(IAppointmentRepository appointmentRepository)
+        public AppointmentService(IAppointmentRepository appointmentRepository, ITimeSlotRepository timeSlotRepository)
         {
             _appointmentRepository = appointmentRepository;
+            _timeSlotRepository = timeSlotRepository;
         }
 
         public async Task<Appointment> AddAsync(Appointment appointment)
@@ -35,9 +36,19 @@ namespace HappyPaws.Application.Services
             return await _appointmentRepository.GetAllAsync();
         }
 
+        public async Task<List<Appointment>> GetAllAsyncByPetId(Guid petId)
+        {
+            return await _appointmentRepository.GetAllAsyncByPetId(petId);
+        }
+
         public async Task<Appointment> GetAsync(Guid id)
         {
             return await _appointmentRepository.GetAsync(id);
+        }
+
+        public async Task<Appointment> GetAsyncByPetId(Guid petId, Guid appointmentId)
+        {
+            return await _appointmentRepository.GetAsyncByPetId(petId, appointmentId);
         }
 
         public async Task<Appointment> UpdateAsync(Guid id, Appointment appointment)

@@ -28,9 +28,19 @@ namespace HappyPaws.Application.Services
             return await _noteRepository.GetAllAsync();
         }
 
+        public async Task<List<Note>> GetAllAsyncByPetAndAppointmentId(Guid petId, Guid appointmentId)
+        {
+            return await _noteRepository.GetAllAsyncByPetAndAppointmentId(petId, appointmentId);
+        }
+
         public async Task<Note> GetAsync(Guid id)
         {
             return await _noteRepository.GetAsync(id);
+        }
+
+        public async Task<Note> GetAsyncByPetAndAppointmentId(Guid petId, Guid appointmentId, Guid noteId)
+        {
+            return await _noteRepository.GetAsyncByPetAndAppointmentId(petId, appointmentId, noteId);
         }
 
         public async Task<Note> UpdateAsync(Guid id, Note note)

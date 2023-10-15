@@ -7,7 +7,7 @@ namespace HappyPaws.API.Contracts.DTOs.PetDTOs
     {
         public AnimalType? Type { get; set; }
         public string Name { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime Birthdate { get; set; }
         public string? Photo { get; set; }
         public Guid OwnerId { get; set; }
 
@@ -17,7 +17,7 @@ namespace HappyPaws.API.Contracts.DTOs.PetDTOs
             {
                 Type = (AnimalType)petDTO.Type,
                 Name = petDTO.Name,
-                BirthDate = petDTO.BirthDate,
+                Birthdate = petDTO.Birthdate,
                 Photo = petDTO.Photo,
                 OwnerId = petDTO.OwnerId
             };

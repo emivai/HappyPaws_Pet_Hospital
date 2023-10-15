@@ -6,8 +6,6 @@ namespace HappyPaws.Core.Entities
 {
     public class Appointment : Entity
     {
-        [NotMapped]
-        public decimal Price { get; set; } = 0;
         public AppointmentStatus Status { get; set; }
         public Guid PetId { get; set; }
         public Guid TimeSlotId { get; set; }
@@ -15,17 +13,21 @@ namespace HappyPaws.Core.Entities
         public TimeSlot TimeSlot { get; set; }
         public List<Note>? Notes { get; set; }
 
-        public List<AppointmentProcedure> AppointmentProcedures { get; set; } = new List<AppointmentProcedure> { };
+        public List<AppointmentProcedure> AppointmentProcedures { get; set; } = new List<AppointmentProcedure> (){ };
 
-        public void CalculateTotalPrice()
+        public decimal CalculateTotalPrice()
         {
+            decimal totalPrice = 0;
+
             if(AppointmentProcedures.Count != 0)
             {
                 foreach (var procedure in AppointmentProcedures)
                 {
-                    this.Price += procedure.Procedure.Price;
+                    totalPrice += procedure.Procedure.Price;
                 }
             }
+
+            return totalPrice;
         }
     }
 }

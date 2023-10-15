@@ -1,5 +1,6 @@
 ﻿using HappyPaws.API.Contracts.DTOs.PetDTOs;
 using HappyPaws.Application.Interfaces;
+using HappyPaws.Core.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
@@ -10,10 +11,12 @@ namespace HappyPaws.API.Controllers
     public class PetsController : ControllerBase
     {
         private readonly IPetService _petsService;
+        private readonly IUserService _usersService;
 
-        public PetsController(IPetService petsService)
+        public PetsController(IPetService petsService, IUserService usersService)
         {
             _petsService = petsService;
+            _usersService = usersService;
         }
 
         [HttpGet]
@@ -30,10 +33,12 @@ namespace HappyPaws.API.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PetDTO), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var pet = await _petsService.GetAsync(id);
+
+            if (pet == null) return NotFound($"Pet with id {id} does not exist.");
 
             return Ok(PetDTO.FromDomain(pet));
         }
@@ -43,6 +48,12 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync(CreatePetDTO petDTO)
         {
+            var owner = await _usersService.GetAsync(petDTO.OwnerId);
+
+            if (owner == null) return BadRequest("Invalid OwnerId. No such user exists.");
+
+            if (owner.Type != UserType.Client) return BadRequest("Invalid OwnerId. Only users of type Client can own pets.");
+
             var created = await _petsService.AddAsync(CreatePetDTO.ToDomain(petDTO));
 
             return StatusCode(StatusCodes.Status201Created, PetDTO.FromDomain(created));
@@ -52,13 +63,13 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(typeof(PetDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateAsync(Guid id, UpdatePetDTO userDTO)
+        public async Task<IActionResult> UpdateAsync(Guid id, UpdatePetDTO petDTO)
         {
             var pet = _petsService.GetAsync(id);
 
-            if (pet == null) return NotFound();
+            if (pet == null) return NotFound($"Pet with id {id} does not exist.");
 
-            var updated = await _petsService.UpdateAsync(id, UpdatePetDTO.ToDomain(userDTO));
+            var updated = await _petsService.UpdateAsync(id, UpdatePetDTO.ToDomain(petDTO));
 
             return Ok(PetDTO.FromDomain(updated));
         }
@@ -71,7 +82,7 @@ namespace HappyPaws.API.Controllers
         {
             var pet = _petsService.GetAsync(id);
 
-            if (pet == null) return NotFound();
+            if (pet == null) return NotFound($"Pet with id {id} does not exist.");
 
             await _petsService.DeleteAsync(id);
 

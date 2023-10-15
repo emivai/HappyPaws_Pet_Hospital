@@ -37,9 +37,19 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
             return await _context.Notes.ToListAsync();
         }
 
+        public async Task<List<Note>> GetAllAsyncByPetAndAppointmentId(Guid petId, Guid appointmentId)
+        {
+            return await _context.Notes.Where(e => e.AppointmentId == appointmentId).Where(e => e.Appointment.PetId == petId).ToListAsync();
+        }
+
         public async Task<Note> GetAsync(Guid id)
         {
             return await _context.Notes.FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<Note> GetAsyncByPetAndAppointmentId(Guid petId, Guid appointmentId, Guid noteId)
+        {
+            return await _context.Notes.Where(e => e.AppointmentId == appointmentId).FirstOrDefaultAsync(p => p.Id == noteId);
         }
 
         public async Task<Note> UpdateAsync(Guid id, Note note)
@@ -49,7 +59,6 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
             if (fromDb != null)
             {
                 fromDb.Value = note.Value;
-                fromDb.AppointmentId = note.AppointmentId;
             }
 
             await _context.SaveChangesAsync();

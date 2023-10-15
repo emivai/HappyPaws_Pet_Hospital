@@ -1,6 +1,8 @@
 ﻿using HappyPaws.API.Contracts.DTOs.TimeSlotDTOs;
 using HappyPaws.Application.Interfaces;
+using HappyPaws.Core.Enums;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace HappyPaws.API.Controllers
 {
@@ -10,10 +12,12 @@ namespace HappyPaws.API.Controllers
     public class TimeSlotsController : ControllerBase
     {
         private readonly ITimeSlotService _timeSlotService;
+        private readonly IUserService _userService;
 
-        public TimeSlotsController(ITimeSlotService timeSlotService)
+        public TimeSlotsController(ITimeSlotService timeSlotService, IUserService userService)
         {
             _timeSlotService = timeSlotService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -30,10 +34,12 @@ namespace HappyPaws.API.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(TimeSlotDTO), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var timeSlot = await _timeSlotService.GetAsync(id);
+
+            if (timeSlot == null) return NotFound($"Time slot with id {id} does not exist.");
 
             return Ok(TimeSlotDTO.FromDomain(timeSlot));
         }
@@ -43,6 +49,12 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync(CreateTimeSlotDTO timeSlotDTO)
         {
+            var doctor = await _userService.GetAsync(timeSlotDTO.DoctorId);
+
+            if (doctor == null) return BadRequest("Invalid DoctorId. No such user exists.");
+
+            if(doctor.Type != UserType.Doctor) return BadRequest("Invalid DoctorId. User has to be of type doctor.");
+
             var created = await _timeSlotService.AddAsync(CreateTimeSlotDTO.ToDomain(timeSlotDTO));
 
             return StatusCode(StatusCodes.Status201Created, TimeSlotDTO.FromDomain(created));
@@ -56,7 +68,13 @@ namespace HappyPaws.API.Controllers
         {
             var timeSlot = _timeSlotService.GetAsync(id);
 
-            if (timeSlot == null) return NotFound();
+            var doctor = await _userService.GetAsync(timeSlotDTO.DoctorId);
+
+            if (doctor == null) return BadRequest("Invalid DoctorId. No such user exists.");
+
+            if (doctor.Type != UserType.Doctor) return BadRequest("Invalid DoctorId. User has to be of type doctor.");
+
+            if (timeSlot == null) return NotFound($"Time slot with id {id} does not exist.");
 
             var updated = await _timeSlotService.UpdateAsync(id, UpdateTimeSlotDTO.ToDomain(timeSlotDTO));
 
@@ -71,7 +89,7 @@ namespace HappyPaws.API.Controllers
         {
             var timeSlot = _timeSlotService.GetAsync(id);
 
-            if (timeSlot == null) return NotFound();
+            if (timeSlot == null) return NotFound($"Time slot with id {id} does not exist.");
 
             await _timeSlotService.DeleteAsync(id);
 

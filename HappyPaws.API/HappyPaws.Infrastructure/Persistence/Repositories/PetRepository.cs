@@ -50,8 +50,8 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
             {
                 fromDb.Type = pet.Type;
                 fromDb.Name = pet.Name;
-                fromDb.BirthDate = pet.BirthDate;
-                fromDb.Photo = pet.Photo;
+                fromDb.Birthdate = pet.Birthdate;
+                fromDb.Photo = pet.Photo ?? fromDb.Photo;
             }
 
             await _context.SaveChangesAsync();

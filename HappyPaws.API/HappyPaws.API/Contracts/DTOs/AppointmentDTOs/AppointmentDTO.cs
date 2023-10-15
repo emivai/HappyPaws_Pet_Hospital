@@ -18,11 +18,10 @@ namespace HappyPaws.API.Contracts.DTOs.AppointmentDTOs
                 Id = appointment.Id,
                 Status = appointment.Status,
                 PetId = appointment.PetId,
-                TimeSlotId = appointment.TimeSlotId
+                TimeSlotId = appointment.TimeSlotId,
+                Price = appointment.CalculateTotalPrice()
             };
-
-            appointment.CalculateTotalPrice();
-
+   
             return appointmentDTO;
         }
     }

@@ -17,7 +17,7 @@ namespace HappyPaws.Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.Name).HasColumnName("name");
 
-            builder.Property(p => p.BirthDate).HasColumnName("birth_date");
+            builder.Property(p => p.Birthdate).HasColumnName("birth_date");
 
             builder.Property(p => p.Photo).HasColumnName("photo");
 

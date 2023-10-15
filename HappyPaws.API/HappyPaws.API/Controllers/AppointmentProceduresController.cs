@@ -10,10 +10,16 @@ namespace HappyPaws.API.Controllers
     public class AppointmentProceduresController : ControllerBase
     {
         private readonly IAppointmentProcedureService _appointmentProceduresService;
+        private readonly IAppointmentService _appointmentsService;
+        private readonly IProcedureService _proceduresService;
 
-        public AppointmentProceduresController(IAppointmentProcedureService appointmentProceduresService)
+        public AppointmentProceduresController(IAppointmentProcedureService appointmentProceduresService, 
+                                                IAppointmentService appointmentsService, 
+                                                IProcedureService proceduresService)
         {
             _appointmentProceduresService = appointmentProceduresService;
+            _appointmentsService = appointmentsService;
+            _proceduresService = proceduresService;
         }
 
         [HttpGet]
@@ -30,10 +36,12 @@ namespace HappyPaws.API.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(AppointmentProcedureDTO), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var appointmentProcedure = await _appointmentProceduresService.GetAsync(id);
+
+            if (appointmentProcedure == null) return NotFound($"Appointment procedure with id {id} does not exist.");
 
             return Ok(AppointmentProcedureDTO.FromDomain(appointmentProcedure));
         }
@@ -43,6 +51,14 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync(CreateAppointmentProcedureDTO appointmentProcedureDTO)
         {
+            var appointment = await _appointmentsService.GetAsync(appointmentProcedureDTO.AppointmentId);
+
+            if (appointment == null) return BadRequest("Invalid AppointmentId. No such appointment exists.");
+
+            var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId);
+
+            if (procedure == null) return BadRequest("Invalid ProcedureId. No such procedure exists.");
+
             var created = await _appointmentProceduresService.AddAsync(CreateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO));
 
             return StatusCode(StatusCodes.Status201Created, AppointmentProcedureDTO.FromDomain(created));
@@ -56,7 +72,15 @@ namespace HappyPaws.API.Controllers
         {
             var appointmentProcedure = _appointmentProceduresService.GetAsync(id);
 
-            if (appointmentProcedure == null) return NotFound();
+            if (appointmentProcedure == null) return NotFound($"Appointment procedure with id {id} does not exist.");
+
+            var appointment = await _appointmentsService.GetAsync(appointmentProcedureDTO.AppointmentId);
+
+            if (appointment == null) return BadRequest("Invalid AppointmentId. No such appointment exists.");
+
+            var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId);
+
+            if (procedure == null) return BadRequest("Invalid ProcedureId. No such procedure exists.");
 
             var updated = await _appointmentProceduresService.UpdateAsync(id, UpdateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO));
 
@@ -71,7 +95,7 @@ namespace HappyPaws.API.Controllers
         {
             var appointmentProcedure = _appointmentProceduresService.GetAsync(id);
 
-            if (appointmentProcedure == null) return NotFound();
+            if (appointmentProcedure == null) return NotFound($"Appointment procedure with id {id} does not exist.");
 
             await _appointmentProceduresService.DeleteAsync(id);
 
