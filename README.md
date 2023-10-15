@@ -1,4 +1,4 @@
-# HappyPaws Pet Hospital 🐕🐈‍⬛
+# HappyPaws Pet Hospital 🐕
 
 ## 1.1. Sistemos paskirtis
 
