@@ -1,5 +1,6 @@
 ﻿using HappyPaws.API.Contracts.DTOs.ProcedureDTOs;
 using HappyPaws.Application.Interfaces;
+using HappyPaws.Core.Exceptions.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
@@ -35,7 +36,7 @@ namespace HappyPaws.API.Controllers
         {
             var procedure = await _procedureService.GetAsync(id);
 
-            if (procedure == null) return NotFound($"Procedure with id {id} does not exist.");
+            if (procedure == null) throw new NotFoundException("Procedure", id);
 
             return Ok(ProcedureDTO.FromDomain(procedure));
         }
@@ -58,7 +59,7 @@ namespace HappyPaws.API.Controllers
         {
             var procedure = _procedureService.GetAsync(id);
 
-            if (procedure == null) return NotFound($"Procedure with id {id} does not exist.");
+            if (procedure == null) throw new NotFoundException("Procedure", id);
 
             var updated = await _procedureService.UpdateAsync(id, UpdateProcedureDTO.ToDomain(noteDTO));
 
@@ -73,7 +74,7 @@ namespace HappyPaws.API.Controllers
         {
             var procedure = _procedureService.GetAsync(id);
 
-            if (procedure == null) return NotFound($"Procedure with id {id} does not exist.");
+            if (procedure == null) throw new NotFoundException("Procedure", id);
 
             await _procedureService.DeleteAsync(id);
 

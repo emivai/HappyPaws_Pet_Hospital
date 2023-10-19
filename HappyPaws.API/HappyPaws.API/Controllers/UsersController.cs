@@ -1,5 +1,7 @@
 ﻿using HappyPaws.API.Contracts.DTOs.UserDTOs;
 using HappyPaws.Application.Interfaces;
+using HappyPaws.Core.Entities;
+using HappyPaws.Core.Exceptions.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
@@ -36,7 +38,7 @@ namespace HappyPaws.API.Controllers
         {
             var user = await _usersService.GetAsync(id);
 
-            if (user == null) return NotFound($"User with id {id} does not exist.");
+            if (user == null) throw new NotFoundException("User", id);
 
             return Ok(UserDTO.FromDomain(user));
         }
@@ -59,7 +61,7 @@ namespace HappyPaws.API.Controllers
         {
             var user = _usersService.GetAsync(id);
 
-            if (user == null) return NotFound($"User with id {id} does not exist.");
+            if (user == null) throw new NotFoundException("User", id);
 
             var updated = await _usersService.UpdateAsync(id, UpdateUserDTO.ToDomain(userDTO));
 
@@ -74,7 +76,7 @@ namespace HappyPaws.API.Controllers
         {
             var user = _usersService.GetAsync(id);
 
-            if (user == null) return NotFound($"User with id {id} does not exist.");
+            if (user == null) throw new NotFoundException("User", id);
 
             await _usersService.DeleteAsync(id);
 

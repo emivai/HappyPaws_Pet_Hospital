@@ -1,6 +1,5 @@
 ﻿using HappyPaws.Core.Entities.Common;
 using HappyPaws.Core.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HappyPaws.Core.Entities
 {

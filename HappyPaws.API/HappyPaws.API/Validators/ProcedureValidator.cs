@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using HappyPaws.API.Contracts.DTOs.ProcedureDTOs;
-using HappyPaws.Core.Entities;
 
 namespace HappyPaws.API.Validators
 {

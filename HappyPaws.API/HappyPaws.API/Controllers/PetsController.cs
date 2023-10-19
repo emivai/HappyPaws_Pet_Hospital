@@ -1,6 +1,7 @@
 ﻿using HappyPaws.API.Contracts.DTOs.PetDTOs;
 using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Enums;
+using HappyPaws.Core.Exceptions.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
@@ -38,7 +39,7 @@ namespace HappyPaws.API.Controllers
         {
             var pet = await _petsService.GetAsync(id);
 
-            if (pet == null) return NotFound($"Pet with id {id} does not exist.");
+            if (pet == null) throw new NotFoundException("Pet", id);
 
             return Ok(PetDTO.FromDomain(pet));
         }
@@ -50,7 +51,7 @@ namespace HappyPaws.API.Controllers
         {
             var owner = await _usersService.GetAsync(petDTO.OwnerId);
 
-            if (owner == null) return BadRequest("Invalid OwnerId. No such user exists.");
+            if (owner == null) throw new NotFoundException("User", petDTO.OwnerId);
 
             if (owner.Type != UserType.Client) return BadRequest("Invalid OwnerId. Only users of type Client can own pets.");
 
@@ -67,7 +68,7 @@ namespace HappyPaws.API.Controllers
         {
             var pet = _petsService.GetAsync(id);
 
-            if (pet == null) return NotFound($"Pet with id {id} does not exist.");
+            if (pet == null) throw new NotFoundException("Pet", id);
 
             var updated = await _petsService.UpdateAsync(id, UpdatePetDTO.ToDomain(petDTO));
 
@@ -82,23 +83,11 @@ namespace HappyPaws.API.Controllers
         {
             var pet = _petsService.GetAsync(id);
 
-            if (pet == null) return NotFound($"Pet with id {id} does not exist.");
+            if (pet == null) throw new NotFoundException("Pet", id);
 
             await _petsService.DeleteAsync(id);
 
             return NoContent();
         }
-
-        //[HttpGet]
-        //[ProducesResponseType(typeof(IEnumerable<PetDTO>), (StatusCodes.Status200OK))]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //public async Task<IActionResult> GetByOwnerAsync(Guid id)
-        //{
-        //    var pets = await _petsService.GetAllAsync();
-
-        //    var result = pets.Select(PetDTO.FromDomain).ToList();
-
-        //    return Ok(result);
-        //}
     }
 }
