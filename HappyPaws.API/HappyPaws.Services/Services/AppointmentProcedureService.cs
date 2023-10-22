@@ -23,9 +23,9 @@ namespace HappyPaws.Application.Services
             await _appointmentProcedureRepository.DeleteAsync(id);
         }
 
-        public async Task<List<AppointmentProcedure>> GetAllAsync()
+        public async Task<List<AppointmentProcedure>> GetAllAsync(Guid appointmentId)
         {
-            return await _appointmentProcedureRepository.GetAllAsync();
+            return await _appointmentProcedureRepository.GetAllAsync(appointmentId);
         }
 
         public async Task<AppointmentProcedure> GetAsync(Guid id)

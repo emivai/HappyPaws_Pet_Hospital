@@ -8,8 +8,6 @@ namespace HappyPaws.API.Validators
         public CreateAppointmentProcedureValidator()
         {
             RuleFor(appointmentProcedure => appointmentProcedure.ProcedureId).NotEmpty().WithMessage("ProcedureId is required.");
-
-            RuleFor(appointmentProcedure => appointmentProcedure.AppointmentId).NotEmpty().WithMessage("AppointmentId is required.");
         }
     }
 

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace HappyPaws.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     [Produces("application/json")]
     public class AppointmentProceduresController : ControllerBase
     {
@@ -23,80 +22,78 @@ namespace HappyPaws.API.Controllers
             _proceduresService = proceduresService;
         }
 
-        [HttpGet]
+        [HttpGet("Appointments/{appointmentId}/[controller]")]
         [ProducesResponseType(typeof(IEnumerable<AppointmentProcedureDTO>), (StatusCodes.Status200OK))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAsync(Guid appointmentId)
         {
-            var appointmentProcedures = await _appointmentProceduresService.GetAllAsync();
+            var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
+
+            var appointmentProcedures = await _appointmentProceduresService.GetAllAsync(appointmentId);
 
             var result = appointmentProcedures.Select(AppointmentProcedureDTO.FromDomain).ToList();
 
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Appointments/{appointmentId}/[controller]/{id}")]
         [ProducesResponseType(typeof(AppointmentProcedureDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetByIdAsync(Guid id)
+        public async Task<IActionResult> GetByIdAsync(Guid appointmentId, Guid id)
         {
+            var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
+
             var appointmentProcedure = await _appointmentProceduresService.GetAsync(id);
 
-            if (appointmentProcedure == null) throw new ResourceNotFoundException();
+            if (appointmentProcedure == null || appointmentProcedure.AppointmentId != appointmentId) throw new ResourceNotFoundException();
 
             return Ok(AppointmentProcedureDTO.FromDomain(appointmentProcedure));
         }
 
-        [HttpPost]
+        [HttpPost("Appointments/{appointmentId}/[controller]")]
         [ProducesResponseType(typeof(AppointmentProcedureDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync(CreateAppointmentProcedureDTO appointmentProcedureDTO)
+        public async Task<IActionResult> CreateAsync(Guid appointmentId, CreateAppointmentProcedureDTO appointmentProcedureDTO)
         {
-            var appointment = await _appointmentsService.GetAsync(appointmentProcedureDTO.AppointmentId);
+            var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
 
-            if (appointment == null) throw new ResourceNotFoundException();
+            var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId) ?? throw new BadRequestException("The specified procedureId does not exist.");
 
-            var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId);
-
-            if (procedure == null) throw new ResourceNotFoundException();
-
-            var created = await _appointmentProceduresService.AddAsync(CreateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO));
+            var created = await _appointmentProceduresService.AddAsync(CreateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO, appointmentId));
 
             return StatusCode(StatusCodes.Status201Created, AppointmentProcedureDTO.FromDomain(created));
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("Appointments/{appointmentId}/[controller]/{id}")]
         [ProducesResponseType(typeof(AppointmentProcedureDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateAsync(Guid id, UpdateAppointmentProcedureDTO appointmentProcedureDTO)
+        public async Task<IActionResult> UpdateAsync(Guid appointmentId, Guid id, UpdateAppointmentProcedureDTO appointmentProcedureDTO)
         {
-            var appointmentProcedure = _appointmentProceduresService.GetAsync(id);
+            var appointmentProcedure = await _appointmentProceduresService.GetAsync(id) ?? throw new ResourceNotFoundException();
 
-            if (appointmentProcedure == null) throw new ResourceNotFoundException();
+            var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
 
-            var appointment = await _appointmentsService.GetAsync(appointmentProcedureDTO.AppointmentId);
+            if (appointmentProcedure.AppointmentId != appointmentId) throw new ResourceNotFoundException();
 
-            if (appointment == null) throw new ResourceNotFoundException();
-
-            var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId);
-
-            if (procedure == null) throw new ResourceNotFoundException();
+            var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId) ?? throw new BadRequestException("The specified procedureId does not exist.");
 
             var updated = await _appointmentProceduresService.UpdateAsync(id, UpdateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO));
 
             return Ok(AppointmentProcedureDTO.FromDomain(updated));
         }
 
-        [HttpDelete]
+        [HttpDelete("Appointments/{appointmentId}/[controller]/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteAsync(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid appointmentId, Guid id)
         {
-            var appointmentProcedure = _appointmentProceduresService.GetAsync(id);
+            var appointmentProcedure = await _appointmentProceduresService.GetAsync(id) ?? throw new ResourceNotFoundException();
 
-            if (appointmentProcedure == null) throw new ResourceNotFoundException();
+            var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
+
+            if (appointmentProcedure.AppointmentId != appointmentId) throw new ResourceNotFoundException();
 
             await _appointmentProceduresService.DeleteAsync(id);
 
