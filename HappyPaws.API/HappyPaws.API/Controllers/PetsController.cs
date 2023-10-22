@@ -37,9 +37,7 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            var pet = await _petsService.GetAsync(id);
-
-            if (pet == null) throw new NotFoundException("Pet", id);
+            var pet = await _petsService.GetAsync(id) ?? throw new ResourceNotFoundException();
 
             return Ok(PetDTO.FromDomain(pet));
         }
@@ -49,11 +47,14 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync(CreatePetDTO petDTO)
         {
+            if (!ModelState.IsValid)
+                throw new ResourceNotFoundException(); ;
+
             var owner = await _usersService.GetAsync(petDTO.OwnerId);
 
-            if (owner == null) throw new NotFoundException("User", petDTO.OwnerId);
+            if (owner == null) throw new ResourceNotFoundException();
 
-            if (owner.Type != UserType.Client) return BadRequest("Invalid OwnerId. Only users of type Client can own pets.");
+            if (owner.Type != UserType.Client) throw new UserTypeException(UserType.Client);
 
             var created = await _petsService.AddAsync(CreatePetDTO.ToDomain(petDTO));
 
@@ -66,24 +67,24 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync(Guid id, UpdatePetDTO petDTO)
         {
-            var pet = _petsService.GetAsync(id);
+            var pet = await _petsService.GetAsync(id);
 
-            if (pet == null) throw new NotFoundException("Pet", id);
+            if (pet == null) throw new ResourceNotFoundException();
 
             var updated = await _petsService.UpdateAsync(id, UpdatePetDTO.ToDomain(petDTO));
 
             return Ok(PetDTO.FromDomain(updated));
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var pet = _petsService.GetAsync(id);
+            var pet = await _petsService.GetAsync(id) ?? throw new ResourceNotFoundException();
 
-            if (pet == null) throw new NotFoundException("Pet", id);
+            if (pet.Appointments != null && pet.Appointments.Any(a => a.Status == AppointmentStatus.Scheduled)) throw new BadRequestException("Pet that has appointments with status 'scheduled' cannot be deleted.");
 
             await _petsService.DeleteAsync(id);
 

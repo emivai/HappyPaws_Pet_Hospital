@@ -3,7 +3,7 @@ using HappyPaws.API.Contracts.DTOs.ProcedureDTOs;
 
 namespace HappyPaws.API.Validators
 {
-    public class CreateProcedureValidator : AbstractValidator<CreateProcedureDTO>
+    public class CreateProcedureValidator : CustomAbstractValidator<CreateProcedureDTO>
     {
         public CreateProcedureValidator()
         {
@@ -18,7 +18,7 @@ namespace HappyPaws.API.Validators
         }      
     }
 
-    public class UpdateProcedureValidator : AbstractValidator<UpdateProcedureDTO>
+    public class UpdateProcedureValidator : CustomAbstractValidator<UpdateProcedureDTO>
     {
         public UpdateProcedureValidator()
         {

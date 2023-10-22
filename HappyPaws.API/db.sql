@@ -60,7 +60,7 @@ ON appointments(time_slot_id);
 
 ALTER TABLE appointments
    ADD CONSTRAINT check_types 
-   CHECK (status IN (0, 1) );
+   CHECK (status IN (0, 1, 2) );
 
 CREATE TABLE notes (
 	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

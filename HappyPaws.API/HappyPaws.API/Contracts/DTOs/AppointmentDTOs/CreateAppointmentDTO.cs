@@ -5,15 +5,14 @@ namespace HappyPaws.API.Contracts.DTOs.AppointmentDTOs
 {
     public class CreateAppointmentDTO
     {
-        public Guid PetId { get; set; }
         public Guid TimeSlotId { get; set; }
 
-        public static Appointment ToDomain(CreateAppointmentDTO appointmentDTO)
+        public static Appointment ToDomain(CreateAppointmentDTO appointmentDTO, Guid petId)
         {
             return new Appointment
             {
                 Status = AppointmentStatus.Scheduled,
-                PetId = appointmentDTO.PetId,
+                PetId = petId,
                 TimeSlotId = appointmentDTO.TimeSlotId
             };
         }

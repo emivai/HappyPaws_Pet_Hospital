@@ -31,24 +31,14 @@ namespace HappyPaws.Application.Services
             await _appointmentRepository.DeleteAsync(id);
         }
 
-        public async Task<List<Appointment>> GetAllAsync()
+        public async Task<List<Appointment>> GetAllAsync(Guid petId)
         {
-            return await _appointmentRepository.GetAllAsync();
-        }
-
-        public async Task<List<Appointment>> GetAllAsyncByPetId(Guid petId)
-        {
-            return await _appointmentRepository.GetAllAsyncByPetId(petId);
+            return await _appointmentRepository.GetAllAsync(petId);
         }
 
         public async Task<Appointment> GetAsync(Guid id)
         {
             return await _appointmentRepository.GetAsync(id);
-        }
-
-        public async Task<Appointment> GetAsyncByPetId(Guid petId, Guid appointmentId)
-        {
-            return await _appointmentRepository.GetAsyncByPetId(petId, appointmentId);
         }
 
         public async Task<Appointment> UpdateAsync(Guid id, Appointment appointment)

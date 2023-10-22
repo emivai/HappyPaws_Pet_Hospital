@@ -36,7 +36,7 @@ namespace HappyPaws.API.Controllers
         {
             var procedure = await _procedureService.GetAsync(id);
 
-            if (procedure == null) throw new NotFoundException("Procedure", id);
+            if (procedure == null) throw new ResourceNotFoundException();
 
             return Ok(ProcedureDTO.FromDomain(procedure));
         }
@@ -59,7 +59,7 @@ namespace HappyPaws.API.Controllers
         {
             var procedure = _procedureService.GetAsync(id);
 
-            if (procedure == null) throw new NotFoundException("Procedure", id);
+            if (procedure == null) throw new ResourceNotFoundException();
 
             var updated = await _procedureService.UpdateAsync(id, UpdateProcedureDTO.ToDomain(noteDTO));
 
@@ -74,7 +74,7 @@ namespace HappyPaws.API.Controllers
         {
             var procedure = _procedureService.GetAsync(id);
 
-            if (procedure == null) throw new NotFoundException("Procedure", id);
+            if (procedure == null) throw new ResourceNotFoundException();
 
             await _procedureService.DeleteAsync(id);
 

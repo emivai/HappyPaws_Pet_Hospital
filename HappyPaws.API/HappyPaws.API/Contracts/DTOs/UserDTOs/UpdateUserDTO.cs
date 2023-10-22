@@ -8,7 +8,6 @@ namespace HappyPaws.API.Contracts.DTOs.UserDTOs
         public string Surname { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-
         public string? Description { get; set; }
         public string? Photo { get; set; }
 
@@ -21,7 +20,7 @@ namespace HappyPaws.API.Contracts.DTOs.UserDTOs
                 Email = userDTO.Email,
                 PhoneNumber = userDTO.PhoneNumber,
                 Description = userDTO.Description,
-                Photo = userDTO.Photo,
+                Photo = userDTO.Photo
             };
         }
     }

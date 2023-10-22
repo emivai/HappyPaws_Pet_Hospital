@@ -3,16 +3,15 @@ using HappyPaws.API.Contracts.DTOs.AppointmentDTOs;
 
 namespace HappyPaws.API.Validators
 {
-    public class CreateAppointmentValidator : AbstractValidator<CreateAppointmentDTO>
+    public class CreateAppointmentValidator : CustomAbstractValidator<CreateAppointmentDTO>
     {
         public CreateAppointmentValidator()
         {
-            RuleFor(pet => pet.PetId).NotNull().WithMessage("PetId is required.");
             RuleFor(pet => pet.TimeSlotId).NotNull().WithMessage("TimeSlotId is required.");
         }
     }
 
-    public class UpdateAppointmentValidator : AbstractValidator<UpdateAppointmentDTO>
+    public class UpdateAppointmentValidator : CustomAbstractValidator<UpdateAppointmentDTO>
     {
         public UpdateAppointmentValidator() 
         {

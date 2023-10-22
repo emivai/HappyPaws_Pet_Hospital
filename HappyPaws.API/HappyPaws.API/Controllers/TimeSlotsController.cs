@@ -39,7 +39,7 @@ namespace HappyPaws.API.Controllers
         {
             var timeSlot = await _timeSlotService.GetAsync(id);
 
-            if (timeSlot == null) throw new NotFoundException("Time slot", id);
+            if (timeSlot == null) throw new ResourceNotFoundException();
 
             return Ok(TimeSlotDTO.FromDomain(timeSlot));
         }
@@ -51,9 +51,9 @@ namespace HappyPaws.API.Controllers
         {
             var doctor = await _userService.GetAsync(timeSlotDTO.DoctorId);
 
-            if (doctor == null) throw new NotFoundException("User", timeSlotDTO.DoctorId);
+            if (doctor == null) throw new ResourceNotFoundException();
 
-            if (doctor.Type != UserType.Doctor) return BadRequest("Invalid DoctorId. User has to be of type doctor.");
+            if (doctor.Type != UserType.Doctor) throw new UserTypeException(UserType.Doctor);
 
             var created = await _timeSlotService.AddAsync(CreateTimeSlotDTO.ToDomain(timeSlotDTO));
 
@@ -70,11 +70,11 @@ namespace HappyPaws.API.Controllers
 
             var doctor = await _userService.GetAsync(timeSlotDTO.DoctorId);
 
-            if (doctor == null) throw new NotFoundException("User", timeSlotDTO.DoctorId);
+            if (doctor == null) throw new ResourceNotFoundException();
 
-            if (doctor.Type != UserType.Doctor) return BadRequest("Invalid DoctorId. User has to be of type doctor.");
+            if (doctor.Type != UserType.Doctor) throw new UserTypeException(UserType.Doctor);
 
-            if (timeSlot == null) throw new NotFoundException("Time slot", id);
+            if (timeSlot == null) throw new ResourceNotFoundException();
 
             var updated = await _timeSlotService.UpdateAsync(id, UpdateTimeSlotDTO.ToDomain(timeSlotDTO));
 
@@ -89,7 +89,7 @@ namespace HappyPaws.API.Controllers
         {
             var timeSlot = _timeSlotService.GetAsync(id);
 
-            if (timeSlot == null) throw new NotFoundException("Time slot", id);
+            if (timeSlot == null) throw new ResourceNotFoundException();
 
             await _timeSlotService.DeleteAsync(id);
 

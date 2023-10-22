@@ -3,7 +3,7 @@ using HappyPaws.API.Contracts.DTOs.TimeSlotDTOs;
 
 namespace HappyPaws.API.Validators
 {
-    public class CreateTimeSlotValidator : AbstractValidator<CreateTimeSlotDTO>
+    public class CreateTimeSlotValidator : CustomAbstractValidator<CreateTimeSlotDTO>
     {
         public CreateTimeSlotValidator() 
         { 
@@ -20,7 +20,7 @@ namespace HappyPaws.API.Validators
         }
     }
 
-    public class UpdateTimeSlotValidator : AbstractValidator<UpdateTimeSlotDTO>
+    public class UpdateTimeSlotValidator : CustomAbstractValidator<UpdateTimeSlotDTO>
     {
         public UpdateTimeSlotValidator()
         {

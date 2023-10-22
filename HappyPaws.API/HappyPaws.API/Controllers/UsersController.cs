@@ -1,6 +1,5 @@
 ﻿using HappyPaws.API.Contracts.DTOs.UserDTOs;
 using HappyPaws.Application.Interfaces;
-using HappyPaws.Core.Entities;
 using HappyPaws.Core.Exceptions.Common;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +37,7 @@ namespace HappyPaws.API.Controllers
         {
             var user = await _usersService.GetAsync(id);
 
-            if (user == null) throw new NotFoundException("User", id);
+            if (user == null) throw new ResourceNotFoundException();
 
             return Ok(UserDTO.FromDomain(user));
         }
@@ -61,7 +60,7 @@ namespace HappyPaws.API.Controllers
         {
             var user = _usersService.GetAsync(id);
 
-            if (user == null) throw new NotFoundException("User", id);
+            if (user == null) throw new ResourceNotFoundException();
 
             var updated = await _usersService.UpdateAsync(id, UpdateUserDTO.ToDomain(userDTO));
 
@@ -76,7 +75,7 @@ namespace HappyPaws.API.Controllers
         {
             var user = _usersService.GetAsync(id);
 
-            if (user == null) throw new NotFoundException("User", id);
+            if (user == null) throw new ResourceNotFoundException();
 
             await _usersService.DeleteAsync(id);
 

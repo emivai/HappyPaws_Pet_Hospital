@@ -10,6 +10,8 @@ namespace HappyPaws.API.Contracts.DTOs.PetDTOs
         public DateTime Birthdate { get; set; }
         public string? Photo { get; set; }
 
+        public Guid OwnerId { get; set; }
+
         public static Pet ToDomain(UpdatePetDTO petDTO)
         {
             return new Pet
@@ -17,7 +19,8 @@ namespace HappyPaws.API.Contracts.DTOs.PetDTOs
                 Type = petDTO.Type,
                 Name = petDTO.Name,
                 Birthdate = petDTO.Birthdate,
-                Photo = petDTO.Photo
+                Photo = petDTO.Photo,
+                OwnerId = petDTO.OwnerId
             };
         }
     }

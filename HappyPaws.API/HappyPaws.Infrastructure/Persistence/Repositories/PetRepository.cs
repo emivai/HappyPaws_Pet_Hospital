@@ -23,7 +23,7 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
 
         public async Task DeleteAsync(Guid id)
         {
-            var fromDb = _context.Pets.FirstOrDefault(p => p.Id == id);
+            var fromDb = await _context.Pets.Include(p => p.Appointments).ThenInclude(a => a.Notes).FirstOrDefaultAsync(p => p.Id == id);
 
             if (fromDb is null) return;
 
@@ -34,12 +34,12 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
 
         public async Task<List<Pet>> GetAllAsync()
         {
-            return await _context.Pets.ToListAsync();
+            return await _context.Pets.Include(p => p.Appointments).ToListAsync();
         }
 
         public async Task<Pet> GetAsync(Guid id)
         {
-            return await _context.Pets.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Pets.Include(p => p.Appointments).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<Pet> UpdateAsync(Guid id, Pet pet)
@@ -52,6 +52,7 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
                 fromDb.Name = pet.Name;
                 fromDb.Birthdate = pet.Birthdate;
                 fromDb.Photo = pet.Photo ?? fromDb.Photo;
+                fromDb.OwnerId = pet.OwnerId;
             }
 
             await _context.SaveChangesAsync();

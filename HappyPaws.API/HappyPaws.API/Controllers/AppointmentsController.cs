@@ -1,6 +1,5 @@
 ﻿using HappyPaws.API.Contracts.DTOs.AppointmentDTOs;
 using HappyPaws.Application.Interfaces;
-using HappyPaws.Core.Entities;
 using HappyPaws.Core.Exceptions.Common;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,90 +20,6 @@ namespace HappyPaws.API.Controllers
             _petService = petService;
         }
 
-        [HttpGet]
-        [Route("[controller]")]
-        [ProducesResponseType(typeof(IEnumerable<AppointmentDTO>), (StatusCodes.Status200OK))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAsync()
-        {
-            var appointments = await _appointmentsService.GetAllAsync();
-
-            var result = appointments.Select(AppointmentDTO.FromDomain).ToList();
-
-            return Ok(result);
-        }
-
-
-        [HttpGet("[controller]/{id}")]
-        [ProducesResponseType(typeof(AppointmentDTO), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetByIdAsync(Guid id)
-        {
-            var appointment = await _appointmentsService.GetAsync(id);
-
-            if (appointment == null) throw new NotFoundException("Appointment", id);
-
-            return Ok(AppointmentDTO.FromDomain(appointment));
-        }
-
-        [Route("[controller]")]
-        [HttpPost]
-        [ProducesResponseType(typeof(AppointmentDTO), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync(CreateAppointmentDTO appointmentDTO)
-        {
-            var timeSlot = await _timeSlotService.GetAsync(appointmentDTO.TimeSlotId);
-
-            if (timeSlot == null) throw new NotFoundException("Time slot", appointmentDTO.TimeSlotId);
-
-            var pet = await _petService.GetAsync(appointmentDTO.PetId);
-
-            if (pet == null) throw new NotFoundException("Pet", appointmentDTO.PetId);
-
-            var created = await _appointmentsService.AddAsync(CreateAppointmentDTO.ToDomain(appointmentDTO));
-
-            return StatusCode(StatusCodes.Status201Created, AppointmentDTO.FromDomain(created));
-        }
-
-        [HttpPut("[controller]/{id}")]
-        [ProducesResponseType(typeof(AppointmentDTO), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateAsync(Guid id, UpdateAppointmentDTO appointmentDTO)
-        {
-            var appointment = _appointmentsService.GetAsync(id);
-
-            if (appointment == null) throw new NotFoundException("Appointment", id);
-
-            var timeSlot = await _timeSlotService.GetAsync(appointmentDTO.TimeSlotId);
-
-            if (timeSlot == null) throw new NotFoundException("Time slot", appointmentDTO.TimeSlotId);
-
-            var pet = await _petService.GetAsync(appointmentDTO.PetId);
-
-            if (pet == null) throw new NotFoundException("Pet", appointmentDTO.PetId);
-
-            var updated = await _appointmentsService.UpdateAsync(id, UpdateAppointmentDTO.ToDomain(appointmentDTO));
-
-            return Ok(AppointmentDTO.FromDomain(updated));
-        }
-
-        [Route("[controller]")]
-        [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteAsync(Guid id)
-        {
-            var appointment = _appointmentsService.GetAsync(id);
-
-            if (appointment == null) throw new NotFoundException("Appointment", id);
-
-            await _appointmentsService.DeleteAsync(id);
-
-            return NoContent();
-        }
-
         [HttpGet("Pets/{petId}/[controller]")]
         [ProducesResponseType(typeof(IEnumerable<AppointmentDTO>), (StatusCodes.Status200OK))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -112,9 +27,7 @@ namespace HappyPaws.API.Controllers
         {
             var pet = await _petService.GetAsync(petId);
 
-            if (pet == null) throw new NotFoundException("Pet", petId);
-
-            var appointments = await _appointmentsService.GetAllAsyncByPetId(petId);
+            var appointments = await _appointmentsService.GetAllAsync(petId);
 
             var result = appointments.Select(AppointmentDTO.FromDomain).ToList();
 
@@ -124,13 +37,13 @@ namespace HappyPaws.API.Controllers
         [HttpGet("Pets/{petId}/[controller]/{appointmentId}")]
         [ProducesResponseType(typeof(AppointmentDTO), (StatusCodes.Status200OK))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAsyncByPetId(Guid petId, Guid appointmentId)
+        public async Task<IActionResult> GetAsync(Guid petId, Guid appointmentId)
         {
-            var pet = await _petService.GetAsync(petId);
+            var pet = await _petService.GetAsync(petId) ?? throw new ResourceNotFoundException();
 
-            if (pet == null) throw new NotFoundException("Pet", petId);
+            var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
 
-            var appointment = await _appointmentsService.GetAsyncByPetId(petId, appointmentId);
+            if (appointment.PetId != petId) throw new ResourceNotFoundException();
 
             return Ok(AppointmentDTO.FromDomain(appointment));
         }
@@ -139,17 +52,15 @@ namespace HappyPaws.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(AppointmentDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsyncByPetId(CreateAppointmentDTO appointmentDTO)
+        public async Task<IActionResult> CreateAsyncByPetId(Guid petId, CreateAppointmentDTO appointmentDTO)
         {
             var timeSlot = await _timeSlotService.GetAsync(appointmentDTO.TimeSlotId);
 
-            if (timeSlot == null) throw new NotFoundException("Time slot", appointmentDTO.TimeSlotId);
+            if (timeSlot == null || !timeSlot.Available) throw new BadRequestException("Time slot invalid or unavailable.");
 
-            var pet = await _petService.GetAsync(appointmentDTO.PetId);
+            var pet = await _petService.GetAsync(petId) ?? throw new ResourceNotFoundException();
 
-            if (pet == null) throw new NotFoundException("Pet", appointmentDTO.PetId);
-
-            var created = await _appointmentsService.AddAsync(CreateAppointmentDTO.ToDomain(appointmentDTO));
+            var created = await _appointmentsService.AddAsync(CreateAppointmentDTO.ToDomain(appointmentDTO, petId));
 
             return StatusCode(StatusCodes.Status201Created, AppointmentDTO.FromDomain(created));
         }
@@ -160,19 +71,17 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsyncByPetId(Guid petId, Guid appointmentId, UpdateAppointmentDTO appointmentDTO)
         {
-            var appointment = _appointmentsService.GetAsync(appointmentId);
+            var pet = await _petService.GetAsync(petId) ?? throw new ResourceNotFoundException();
 
-            if (appointment == null) throw new NotFoundException("Appointment", appointmentId);
+            var appointment = await _appointmentsService.GetAsync(appointmentId);
 
-            var pet = await _petService.GetAsync(petId);
-
-            if (pet == null) throw new NotFoundException("Pet", petId);
+            if (appointment == null || appointment.PetId != petId ) throw new ResourceNotFoundException();
 
             var timeSlot = await _timeSlotService.GetAsync(appointmentDTO.TimeSlotId);
 
-            if (timeSlot == null) throw new NotFoundException("Time slot", appointmentDTO.TimeSlotId);
+            if (timeSlot == null || (appointment.TimeSlotId != timeSlot.Id && !timeSlot.Available)) throw new BadRequestException("Time slot invalid or unavailable.");
 
-            var updated = await _appointmentsService.UpdateAsync(appointmentId, UpdateAppointmentDTO.ToDomain(appointmentDTO));
+            var updated = await _appointmentsService.UpdateAsync(appointmentId, UpdateAppointmentDTO.ToDomain(appointmentDTO, petId));
 
             return Ok(AppointmentDTO.FromDomain(updated));
         }
@@ -184,13 +93,11 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsyncByPetId(Guid petId, Guid appointmentId)
         {
-            var appointment = _appointmentsService.GetAsync(appointmentId);
+            var pet = await _petService.GetAsync(petId) ?? throw new ResourceNotFoundException();
 
-            if (appointment == null) throw new NotFoundException("Appointment", appointmentId);
+            var appointment = await _appointmentsService.GetAsync(appointmentId);
 
-            var pet = await _petService.GetAsync(petId);
-
-            if (pet == null) throw new NotFoundException("Pet", petId);
+            if (appointment == null || appointment.PetId != petId) throw new ResourceNotFoundException();
 
             await _appointmentsService.DeleteAsync(appointmentId);
 

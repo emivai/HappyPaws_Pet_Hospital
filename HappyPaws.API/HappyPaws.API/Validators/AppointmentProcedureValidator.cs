@@ -3,7 +3,7 @@ using HappyPaws.API.Contracts.DTOs.AppointmentProcedureDTOs;
 
 namespace HappyPaws.API.Validators
 {
-    public class CreateAppointmentProcedureValidator : AbstractValidator<CreateAppointmentProcedureDTO>
+    public class CreateAppointmentProcedureValidator : CustomAbstractValidator<CreateAppointmentProcedureDTO>
     {
         public CreateAppointmentProcedureValidator()
         {
@@ -13,7 +13,7 @@ namespace HappyPaws.API.Validators
         }
     }
 
-    public class UpdateAppointmentProcedureValidator : AbstractValidator<UpdateAppointmentProcedureDTO>
+    public class UpdateAppointmentProcedureValidator : CustomAbstractValidator<UpdateAppointmentProcedureDTO>
     {
         public UpdateAppointmentProcedureValidator()
         {

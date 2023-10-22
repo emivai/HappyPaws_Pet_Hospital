@@ -1,4 +1,5 @@
-﻿using HappyPaws.Core.Exceptions.Common;
+﻿using FluentValidation;
+using HappyPaws.Core.Exceptions.Common;
 using System.Net;
 using System.Text.Json;
 
@@ -26,7 +27,10 @@ namespace HappyPaws.API.Middleware
 
                 response.StatusCode = error switch
                 {
-                    NotFoundException => (int)HttpStatusCode.NotFound,
+                    ResourceNotFoundException => (int)HttpStatusCode.NotFound,
+                    BadRequestException => (int)HttpStatusCode.BadRequest,
+                    UserTypeException => (int)HttpStatusCode.BadRequest,
+                    ValidationException => (int)HttpStatusCode.BadRequest,
                     _ => (int)HttpStatusCode.InternalServerError,
                 };
 

@@ -42,7 +42,7 @@ namespace HappyPaws.API.Controllers
         {
             var appointmentProcedure = await _appointmentProceduresService.GetAsync(id);
 
-            if (appointmentProcedure == null) throw new NotFoundException("Appointment procedure", id);
+            if (appointmentProcedure == null) throw new ResourceNotFoundException();
 
             return Ok(AppointmentProcedureDTO.FromDomain(appointmentProcedure));
         }
@@ -54,11 +54,11 @@ namespace HappyPaws.API.Controllers
         {
             var appointment = await _appointmentsService.GetAsync(appointmentProcedureDTO.AppointmentId);
 
-            if (appointment == null) throw new NotFoundException("Appointment", appointmentProcedureDTO.AppointmentId);
+            if (appointment == null) throw new ResourceNotFoundException();
 
             var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId);
 
-            if (procedure == null) throw new NotFoundException("Procedure", appointmentProcedureDTO.ProcedureId);
+            if (procedure == null) throw new ResourceNotFoundException();
 
             var created = await _appointmentProceduresService.AddAsync(CreateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO));
 
@@ -73,15 +73,15 @@ namespace HappyPaws.API.Controllers
         {
             var appointmentProcedure = _appointmentProceduresService.GetAsync(id);
 
-            if (appointmentProcedure == null) throw new NotFoundException("Appointment procedure", id);
+            if (appointmentProcedure == null) throw new ResourceNotFoundException();
 
             var appointment = await _appointmentsService.GetAsync(appointmentProcedureDTO.AppointmentId);
 
-            if (appointment == null) throw new NotFoundException("Appointment", appointmentProcedureDTO.AppointmentId);
+            if (appointment == null) throw new ResourceNotFoundException();
 
             var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId);
 
-            if (procedure == null) throw new NotFoundException("Procedure", appointmentProcedureDTO.ProcedureId);
+            if (procedure == null) throw new ResourceNotFoundException();
 
             var updated = await _appointmentProceduresService.UpdateAsync(id, UpdateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO));
 
@@ -96,7 +96,7 @@ namespace HappyPaws.API.Controllers
         {
             var appointmentProcedure = _appointmentProceduresService.GetAsync(id);
 
-            if (appointmentProcedure == null) throw new NotFoundException("Appointment procedure", id);
+            if (appointmentProcedure == null) throw new ResourceNotFoundException();
 
             await _appointmentProceduresService.DeleteAsync(id);
 

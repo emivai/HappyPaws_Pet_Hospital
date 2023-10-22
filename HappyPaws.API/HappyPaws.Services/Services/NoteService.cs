@@ -23,24 +23,14 @@ namespace HappyPaws.Application.Services
             await _noteRepository.DeleteAsync(id);
         }
 
-        public async Task<List<Note>> GetAllAsync()
+        public async Task<List<Note>> GetAllAsync(Guid appointmentId)
         {
-            return await _noteRepository.GetAllAsync();
-        }
-
-        public async Task<List<Note>> GetAllAsyncByPetAndAppointmentId(Guid petId, Guid appointmentId)
-        {
-            return await _noteRepository.GetAllAsyncByPetAndAppointmentId(petId, appointmentId);
+            return await _noteRepository.GetAllAsync(appointmentId);
         }
 
         public async Task<Note> GetAsync(Guid id)
         {
             return await _noteRepository.GetAsync(id);
-        }
-
-        public async Task<Note> GetAsyncByPetAndAppointmentId(Guid petId, Guid appointmentId, Guid noteId)
-        {
-            return await _noteRepository.GetAsyncByPetAndAppointmentId(petId, appointmentId, noteId);
         }
 
         public async Task<Note> UpdateAsync(Guid id, Note note)

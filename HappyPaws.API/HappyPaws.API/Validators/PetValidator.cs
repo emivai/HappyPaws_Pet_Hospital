@@ -3,7 +3,7 @@ using HappyPaws.API.Contracts.DTOs.PetDTOs;
 
 namespace HappyPaws.API.Validators
 {
-    public class CreatePetValidator : AbstractValidator<CreatePetDTO>
+    public class CreatePetValidator : CustomAbstractValidator<CreatePetDTO>
     {
         private const string OnlyLettersAndWhiteSpace = @"^[\p{L}\s']*$";
 
@@ -24,7 +24,7 @@ namespace HappyPaws.API.Validators
         }
     }
 
-    public class UpdatePetValidator : AbstractValidator<UpdatePetDTO>
+    public class UpdatePetValidator : CustomAbstractValidator<UpdatePetDTO>
     {
         private const string OnlyLettersAndWhiteSpace = @"^[\p{L}\s']*$";
 
