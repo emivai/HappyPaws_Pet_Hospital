@@ -58,6 +58,8 @@ namespace HappyPaws.API.Controllers
 
             if (timeSlot == null || !timeSlot.Available) throw new BadRequestException("Time slot invalid or unavailable.");
 
+            if (timeSlot.Start < DateTime.UtcNow) throw new BadRequestException("Cannot use timeslot from the past.");
+
             var pet = await _petService.GetAsync(petId) ?? throw new ResourceNotFoundException();
 
             var created = await _appointmentsService.AddAsync(CreateAppointmentDTO.ToDomain(appointmentDTO, petId));
@@ -80,6 +82,8 @@ namespace HappyPaws.API.Controllers
             var timeSlot = await _timeSlotService.GetAsync(appointmentDTO.TimeSlotId);
 
             if (timeSlot == null || (appointment.TimeSlotId != timeSlot.Id && !timeSlot.Available)) throw new BadRequestException("Time slot invalid or unavailable.");
+
+            if (timeSlot.Start < DateTime.UtcNow) throw new BadRequestException("Cannot use timeslot from the past.");
 
             var updated = await _appointmentsService.UpdateAsync(appointmentId, UpdateAppointmentDTO.ToDomain(appointmentDTO, petId));
 
