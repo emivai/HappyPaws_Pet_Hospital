@@ -62,7 +62,7 @@ CREATE TABLE appointment_procedures (
 	procedure_id uuid not null,
 	appointment_id uuid not null,
 	user_id uuid not null,
-	CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id),
+	CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id), 
    	CONSTRAINT fk_procedure FOREIGN KEY(procedure_id) REFERENCES procedures(id),
 	CONSTRAINT fk_appointment FOREIGN KEY(appointment_id) REFERENCES appointments(id)
 );

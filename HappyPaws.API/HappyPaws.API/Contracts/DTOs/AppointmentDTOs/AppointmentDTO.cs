@@ -11,6 +11,8 @@ namespace HappyPaws.API.Contracts.DTOs.AppointmentDTOs
         public Guid PetId { get; set; }
         public Guid TimeSlotId { get; set; }
 
+        public Guid UserId { get; set; }
+
         public static AppointmentDTO FromDomain(Appointment appointment)
         {
             var appointmentDTO = new AppointmentDTO
@@ -19,7 +21,8 @@ namespace HappyPaws.API.Contracts.DTOs.AppointmentDTOs
                 Status = appointment.Status,
                 PetId = appointment.PetId,
                 TimeSlotId = appointment.TimeSlotId,
-                Price = appointment.CalculateTotalPrice()
+                Price = appointment.CalculateTotalPrice(),
+                UserId = appointment.UserId
             };
    
             return appointmentDTO;

@@ -7,7 +7,7 @@ namespace HappyPaws.API.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    public class AppointmentsController : ControllerBase
+    public class AppointmentsController : BaseController
     {
         private readonly IAppointmentService _appointmentsService;
         private readonly ITimeSlotService _timeSlotService;
@@ -62,7 +62,9 @@ namespace HappyPaws.API.Controllers
 
             var pet = await _petService.GetAsync(petId) ?? throw new ResourceNotFoundException();
 
-            var created = await _appointmentsService.AddAsync(CreateAppointmentDTO.ToDomain(appointmentDTO, petId));
+            var userId = GetUserId();
+
+            var created = await _appointmentsService.AddAsync(CreateAppointmentDTO.ToDomain(appointmentDTO, petId, userId));
 
             return StatusCode(StatusCodes.Status201Created, AppointmentDTO.FromDomain(created));
         }
@@ -85,7 +87,9 @@ namespace HappyPaws.API.Controllers
 
             if (timeSlot.Start < DateTime.UtcNow) throw new BadRequestException("Cannot use timeslot from the past.");
 
-            var updated = await _appointmentsService.UpdateAsync(appointmentId, UpdateAppointmentDTO.ToDomain(appointmentDTO, petId));
+            var userId = GetUserId();
+
+            var updated = await _appointmentsService.UpdateAsync(appointmentId, UpdateAppointmentDTO.ToDomain(appointmentDTO, petId, userId));
 
             return Ok(AppointmentDTO.FromDomain(updated));
         }

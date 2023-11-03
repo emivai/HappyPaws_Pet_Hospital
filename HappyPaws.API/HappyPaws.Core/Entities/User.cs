@@ -16,5 +16,8 @@ namespace HappyPaws.Core.Entities
         public string? Description { get; set; }
         public string? Photo { get; set; }
         public List<TimeSlot>? TimeSlots { get; set; }
+        public List<Appointment>? Appointments { get; set; }
+        public List<Note>? Notes { get; set; }
+        public List<AppointmentProcedure>? AppointmentProcedures { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace HappyPaws.API.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    public class AppointmentProceduresController : ControllerBase
+    public class AppointmentProceduresController : BaseController
     {
         private readonly IAppointmentProcedureService _appointmentProceduresService;
         private readonly IAppointmentService _appointmentsService;
@@ -59,7 +59,9 @@ namespace HappyPaws.API.Controllers
 
             var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId) ?? throw new BadRequestException("The specified procedureId does not exist.");
 
-            var created = await _appointmentProceduresService.AddAsync(CreateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO, appointmentId));
+            var userId = GetUserId();
+
+            var created = await _appointmentProceduresService.AddAsync(CreateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO, appointmentId, userId));
 
             return StatusCode(StatusCodes.Status201Created, AppointmentProcedureDTO.FromDomain(created));
         }
@@ -78,7 +80,9 @@ namespace HappyPaws.API.Controllers
 
             var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId) ?? throw new BadRequestException("The specified procedureId does not exist.");
 
-            var updated = await _appointmentProceduresService.UpdateAsync(id, UpdateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO));
+            var userId = GetUserId();
+
+            var updated = await _appointmentProceduresService.UpdateAsync(id, UpdateAppointmentProcedureDTO.ToDomain(appointmentProcedureDTO, userId));
 
             return Ok(AppointmentProcedureDTO.FromDomain(updated));
         }

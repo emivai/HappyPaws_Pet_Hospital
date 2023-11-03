@@ -7,7 +7,7 @@ namespace HappyPaws.API.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    public class NotesController : ControllerBase
+    public class NotesController : BaseController
     {
         private readonly INoteService _noteService;
         private readonly IAppointmentService _appointmentService;
@@ -70,7 +70,9 @@ namespace HappyPaws.API.Controllers
 
             if (appointment == null || appointment.PetId != petId) throw new ResourceNotFoundException();
 
-            var created = await _noteService.AddAsync(CreateNoteDTO.ToDomain(noteDTO, appointmentId));
+            var userId = GetUserId();
+
+            var created = await _noteService.AddAsync(CreateNoteDTO.ToDomain(noteDTO, appointmentId, userId));
 
             return StatusCode(StatusCodes.Status201Created, NoteDTO.FromDomain(created));
         }
@@ -91,7 +93,9 @@ namespace HappyPaws.API.Controllers
 
             if (note == null || note.AppointmentId != appointmentId) throw new ResourceNotFoundException();
 
-            var updated = await _noteService.UpdateAsync(noteId, UpdateNoteDTO.ToDomain(noteDTO));
+            var userId = GetUserId();
+
+            var updated = await _noteService.UpdateAsync(noteId, UpdateNoteDTO.ToDomain(noteDTO, userId));
 
             return Ok(NoteDTO.FromDomain(updated));
         }

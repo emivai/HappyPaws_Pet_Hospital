@@ -11,6 +11,8 @@ namespace HappyPaws.Core.Entities
         public Pet Pet { get; set; }
         public TimeSlot TimeSlot { get; set; }
         public List<Note>? Notes { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; }
 
         public List<AppointmentProcedure> AppointmentProcedures { get; set; } = new List<AppointmentProcedure> (){ };
 

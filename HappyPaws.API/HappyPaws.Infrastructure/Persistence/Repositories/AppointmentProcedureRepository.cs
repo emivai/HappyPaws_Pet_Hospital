@@ -51,6 +51,7 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
             {
                 fromDb.ProcedureId = appointmentProcedure.ProcedureId;
                 fromDb.AppointmentId = appointmentProcedure.AppointmentId;
+                fromDb.UserId = appointmentProcedure.UserId;
             }
 
             await _context.SaveChangesAsync();

@@ -7,12 +7,13 @@ namespace HappyPaws.API.Contracts.DTOs.AppointmentProcedureDTOs
         public Guid ProcedureId { get; set; }
         public Guid AppointmentId { get; set; }
 
-        public static AppointmentProcedure ToDomain(UpdateAppointmentProcedureDTO appointmentProcedureDTO)
+        public static AppointmentProcedure ToDomain(UpdateAppointmentProcedureDTO appointmentProcedureDTO, Guid userId)
         {
             return new AppointmentProcedure
             {
                 ProcedureId = appointmentProcedureDTO.ProcedureId,
-                AppointmentId = appointmentProcedureDTO.AppointmentId
+                AppointmentId = appointmentProcedureDTO.AppointmentId,
+                UserId = userId
             };
         }
     }
