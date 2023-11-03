@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HappyPaws.Core.Exceptions.Common;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
 {

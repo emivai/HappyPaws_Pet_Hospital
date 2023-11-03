@@ -1,4 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using HappyPaws.API.Auth.Handlers;
+using HappyPaws.API.Auth.Policies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 namespace HappyPaws.API.Auth

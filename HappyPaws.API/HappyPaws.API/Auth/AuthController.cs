@@ -2,7 +2,9 @@
 using FluentValidation;
 using HappyPaws.API.Contracts.DTOs.UserDTOs;
 using HappyPaws.API.Controllers;
+using HappyPaws.API.Extensions;
 using HappyPaws.Application.Interfaces;
+using HappyPaws.Core.Exceptions.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +28,15 @@ namespace HappyPaws.API.Auth
         [Route("login")]
         public async Task<ActionResult> Login(LoginUserDTO loginUserDTO)
         {
-            return Ok(await _userService.LoginAsync(loginUserDTO));
+            var user = await _userService.GetByEmailAsync(loginUserDTO.Email);
+
+            if (user == null) throw new BadRequestException("Email or password is invalid");
+
+            if (!user.Verify(loginUserDTO.Password)) throw new BadRequestException("Email or password is invalid");
+
+            var accessToken = _tokenManager.CreateAccessToken(user);
+
+            return Ok(accessToken);
         }
 
         [HttpPost]
@@ -52,7 +62,7 @@ namespace HappyPaws.API.Auth
         public async Task<IActionResult> CurrentUser()
         {
             var bearerToken = Request.Headers["authorization"].ToString().Replace("Bearer ", "");
-            var token = _tokenManager.DecodeAccessTokenAsync(bearerToken);
+            var token = _tokenManager.DecodeAccessToken(bearerToken);
 
             if (token == null || token.ValidFrom > DateTime.UtcNow || token.ValidTo < DateTime.UtcNow)
             {

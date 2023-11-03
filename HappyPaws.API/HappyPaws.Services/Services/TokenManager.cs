@@ -24,7 +24,7 @@ namespace HappyPaws.Application.Services
             _audience = configuration["JWT:ValidAudience"] ?? throw new Exception();
         }
 
-        public string CreateAccessTokenAsync(User user)
+        public string CreateAccessToken(User user)
         {
             var authClaims = new List<Claim>
             {
@@ -46,7 +46,7 @@ namespace HappyPaws.Application.Services
             return new JwtSecurityTokenHandler().WriteToken(accessSecurityToken);
         }
 
-        public JwtSecurityToken? DecodeAccessTokenAsync(string accessToken)
+        public JwtSecurityToken? DecodeAccessToken(string accessToken)
         {
             var handler = new JwtSecurityTokenHandler();
             return handler.ReadJwtToken(accessToken);

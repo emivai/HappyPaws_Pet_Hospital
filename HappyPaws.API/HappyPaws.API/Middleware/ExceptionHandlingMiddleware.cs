@@ -31,6 +31,7 @@ namespace HappyPaws.API.Middleware
                     BadRequestException => (int)HttpStatusCode.BadRequest,
                     UserTypeException => (int)HttpStatusCode.BadRequest,
                     ValidationException => (int)HttpStatusCode.BadRequest,
+                    ForbiddenException => (int)HttpStatusCode.Forbidden,
                     _ => (int)HttpStatusCode.InternalServerError,
                 };
 

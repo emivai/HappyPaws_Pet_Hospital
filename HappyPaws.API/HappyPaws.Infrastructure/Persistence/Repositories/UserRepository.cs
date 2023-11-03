@@ -42,6 +42,11 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
             return await _context.Users.FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(p => p.Email == email);
+        }
+
         public async Task<User> UpdateAsync(Guid id, User user)
         {
             var fromDb = await GetAsync(id);

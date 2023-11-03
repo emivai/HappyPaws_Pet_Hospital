@@ -5,7 +5,7 @@ namespace HappyPaws.Application.Interfaces
 {
     public interface ITokenManager
     {
-        string CreateAccessTokenAsync(User user);
-        JwtSecurityToken? DecodeAccessTokenAsync(string token);
+        string CreateAccessToken(User user);
+        JwtSecurityToken? DecodeAccessToken(string token);
     }
 }

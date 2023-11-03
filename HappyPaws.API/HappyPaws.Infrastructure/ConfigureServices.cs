@@ -1,4 +1,6 @@
-﻿using HappyPaws.Core.Interfaces;
+﻿using HappyPaws.Application.Interfaces;
+using HappyPaws.Application.Services;
+using HappyPaws.Core.Interfaces;
 using HappyPaws.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +22,8 @@ namespace HappyPaws.Infrastructure
                 .AddScoped<IPetRepository, PetRepository>()
                 .AddScoped<IProcedureRepository, ProcedureRepository>()
                 .AddScoped<ITimeSlotRepository, TimeSlotRepository>()
-                .AddScoped<IUserRepository, UserRepository>();
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddTransient<ITokenManager, TokenManager>();
 
             return services;
         }

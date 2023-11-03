@@ -8,10 +8,12 @@ namespace HappyPaws.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ITokenManager _tokenManager;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, ITokenManager tokenManager)
         {
             _userRepository = userRepository;
+            _tokenManager = tokenManager;
         }
 
         public async Task<User> AddAsync(User user)
@@ -34,22 +36,14 @@ namespace HappyPaws.Application.Services
             return await _userRepository.GetAsync(id);
         }
 
+        public Task<User> GetByEmailAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<User> UpdateAsync(Guid id, User user)
         {
             return await _userRepository.UpdateAsync(id, user);
-        }
-
-        public async Task<SuccessfullLoginDTO> LoginAsync(LoginUserDTO userDTO)
-        {
-            var user = _userRepository.FirstOrDefault(x => x.Email == userDTO.Email);
-
-            if (user == null) throw new BadRequestException("Email or password is invalid");
-
-            if (!user.Verify(userDTO.Password)) throw new BadRequestException("Email or password is invalid");
-
-            var accessToken = _tokenManager.CreateAccessTokenAsync(user);
-
-            return new SuccessfullLoginDTO { AccessToken = accessToken };
         }
     }
 }

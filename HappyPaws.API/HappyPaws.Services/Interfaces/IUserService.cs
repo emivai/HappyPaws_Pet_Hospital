@@ -9,5 +9,6 @@ namespace HappyPaws.Application.Interfaces
         public Task<List<User>> GetAllAsync();
         public Task<User> UpdateAsync(Guid id, User user);
         public Task DeleteAsync(Guid id);
+        public Task<User> GetByEmailAsync(string email);
     }
 }
