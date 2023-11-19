@@ -115,7 +115,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'rentsystem101'
+          app-name: 'happypaws'
           slot-name: 'Production'
           publish-profile: ${{ secrets.HappyPawsAPI_979A  }}
           package: .
