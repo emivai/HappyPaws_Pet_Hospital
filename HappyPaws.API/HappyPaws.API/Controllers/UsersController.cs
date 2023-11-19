@@ -42,16 +42,6 @@ namespace HappyPaws.API.Controllers
             return Ok(UserDTO.FromDomain(user));
         }
 
-        [HttpPost]
-        [ProducesResponseType(typeof(UserDTO), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync(CreateUserDTO userDTO)
-        {
-            var created = await _usersService.AddAsync(CreateUserDTO.ToDomain(userDTO));
-
-            return StatusCode(StatusCodes.Status201Created, UserDTO.FromDomain(created));
-        }
-
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

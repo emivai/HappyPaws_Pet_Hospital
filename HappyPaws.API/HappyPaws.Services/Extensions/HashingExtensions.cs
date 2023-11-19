@@ -1,7 +1,7 @@
 ﻿using HappyPaws.Core.Entities;
 using System.Security.Cryptography;
 
-namespace HappyPaws.API.Extensions
+namespace HappyPaws.Application.Extensions
 {
     public static class HashingExtensions
     {

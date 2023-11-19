@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace HappyPaws.API.Auth
+namespace HappyPaws.API.Capabilities
 {
     public static class StartupSwagger
     {

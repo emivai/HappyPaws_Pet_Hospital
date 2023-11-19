@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace HappyPaws.API.Auth
+namespace HappyPaws.API.Capabilities
 {
     public static class StartupAuth
     {

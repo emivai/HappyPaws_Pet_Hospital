@@ -2,7 +2,7 @@
 using FluentValidation;
 using HappyPaws.API.Contracts.DTOs.UserDTOs;
 using HappyPaws.API.Controllers;
-using HappyPaws.API.Extensions;
+using HappyPaws.Application.Extensions;
 using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Exceptions.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -43,13 +43,9 @@ namespace HappyPaws.API.Auth
         [Route("register")]
         public async Task<IActionResult> Register(CreateUserDTO createUserDTO)
         {
-            var result = _validator.Validate(createUserDTO);
+            var user = await _userService.GetByEmailAsync(createUserDTO.Email);
 
-            if (!result.IsValid)
-            {
-                var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
-                return BadRequest(errorMessages);
-            }
+            if (user != null) throw new BadRequestException("User with this email already exists");
 
             await _userService.AddAsync(CreateUserDTO.ToDomain(createUserDTO));
 

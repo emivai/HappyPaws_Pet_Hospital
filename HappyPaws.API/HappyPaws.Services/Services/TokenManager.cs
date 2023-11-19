@@ -1,6 +1,5 @@
 ﻿using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Entities;
-using HappyPaws.Core.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,13 +11,10 @@ namespace HappyPaws.Application.Services
     public class TokenManager : ITokenManager
     {
         private readonly SymmetricSecurityKey _authSigningKey;
-        private readonly IUserRepository _userRepository;
         private readonly string _issuer;
         private readonly string _audience;
-        public TokenManager(IConfiguration configuration, IUserRepository userRepository)
+        public TokenManager(IConfiguration configuration)
         {
-            _userRepository = userRepository;
-
             _authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"] ?? throw new Exception()));
             _issuer = configuration["JWT:ValidIssuer"] ?? throw new Exception();
             _audience = configuration["JWT:ValidAudience"] ?? throw new Exception();

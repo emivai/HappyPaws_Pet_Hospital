@@ -1,6 +1,6 @@
-﻿using HappyPaws.Application.Interfaces;
+﻿using HappyPaws.Application.Extensions;
+using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Entities;
-using HappyPaws.Core.Exceptions.Common;
 using HappyPaws.Core.Interfaces;
 
 namespace HappyPaws.Application.Services
@@ -18,6 +18,11 @@ namespace HappyPaws.Application.Services
 
         public async Task<User> AddAsync(User user)
         {
+            var hashValue = user.Password.Hash();
+
+            user.Password = hashValue.Hash;
+            user.Salt = hashValue.Salt;
+
             return await _userRepository.AddAsync(user);
         }
 
@@ -36,9 +41,9 @@ namespace HappyPaws.Application.Services
             return await _userRepository.GetAsync(id);
         }
 
-        public Task<User> GetByEmailAsync(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetByEmailAsync(email);
         }
 
         public async Task<User> UpdateAsync(Guid id, User user)

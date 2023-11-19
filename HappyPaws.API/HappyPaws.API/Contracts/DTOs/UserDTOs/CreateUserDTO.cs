@@ -24,7 +24,8 @@ namespace HappyPaws.API.Contracts.DTOs.UserDTOs
                 Email = userDTO.Email,
                 PhoneNumber = userDTO.PhoneNumber,
                 Description = userDTO.Description,
-                Photo = userDTO.Photo
+                Photo = userDTO.Photo,
+                Password = userDTO.Password
             };
         }
     }

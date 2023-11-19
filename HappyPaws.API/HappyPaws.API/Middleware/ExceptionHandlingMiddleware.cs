@@ -28,9 +28,9 @@ namespace HappyPaws.API.Middleware
                 response.StatusCode = error switch
                 {
                     ResourceNotFoundException => (int)HttpStatusCode.NotFound,
-                    BadRequestException => (int)HttpStatusCode.BadRequest,
-                    UserTypeException => (int)HttpStatusCode.BadRequest,
-                    ValidationException => (int)HttpStatusCode.BadRequest,
+                    BadRequestException => (int)HttpStatusCode.UnprocessableEntity,
+                    UserTypeException => (int)HttpStatusCode.UnprocessableEntity,
+                    ValidationException => (int)HttpStatusCode.UnprocessableEntity,
                     ForbiddenException => (int)HttpStatusCode.Forbidden,
                     _ => (int)HttpStatusCode.InternalServerError,
                 };

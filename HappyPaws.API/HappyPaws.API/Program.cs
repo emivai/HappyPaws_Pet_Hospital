@@ -1,7 +1,6 @@
 using HappyPaws.API.Capabilities;
 using HappyPaws.API.Middleware;
 using FluentValidation.AspNetCore;
-using HappyPaws.API.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
