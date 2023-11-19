@@ -11,7 +11,6 @@ env:
   AZURE_APIM_SERVICENAME: HappyPawsAPIapi
   AZURE_APIM_API_ID: HappyPawsAPI
   AZURE_APIM_APPSERVICEURL: https://happypawsapi.azurewebsites.net
-  SWASHBUCKLE_DOTNET_CORE_VERSION: 3.1.x
   API_IMPORT_SPECIFICATION_PATH: ./publish/swagger.json
   API_IMPORT_DLL: ./bin/Release/net6.0/HappyPaws.API.dll
   API_IMPORT_VERSION: v1
