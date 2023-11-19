@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core application to Web App HappyPawsAPI with API Management Service HappyPawsAPIapi-HappyPawsAPI
+name: Build and deploy .NET Core application to Web App HappyPawsAPI with API Management Service HappyPawsAPI
 on:
   push:
     branches:
@@ -18,7 +18,7 @@ env:
   API_IMPORT_VERSION: v1
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  WORKING_DIRECTORY: ./HappyPaws.API\HappyPaws.API
+  WORKING_DIRECTORY: ./HappyPaws.API/HappyPaws.API
 
 jobs:
   build:
