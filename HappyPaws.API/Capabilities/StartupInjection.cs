@@ -12,7 +12,8 @@ namespace HappyPaws.API.Capabilities
             services
                 .ConfigureInfrastructureServices(configuration)
                 .ConfigureApplicationServices()
-                .AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>();
+                .AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>()
+                .AddSingleton<IAuthorizationHandler, SameUserAuthorizationHandler>();
 
             return services;
         }
