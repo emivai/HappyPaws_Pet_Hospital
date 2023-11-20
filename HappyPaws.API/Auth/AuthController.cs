@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HappyPaws.API.Auth
 {
     [ApiController]
-    [Route("api/auth")]
+    [Route("auth")]
     public class AuthController : BaseController
     {
         private readonly IUserService _userService;
