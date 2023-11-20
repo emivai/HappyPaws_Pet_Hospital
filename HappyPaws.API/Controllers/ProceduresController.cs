@@ -1,11 +1,13 @@
 ﻿using HappyPaws.API.Contracts.DTOs.ProcedureDTOs;
 using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Exceptions.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
 {
     [ApiController]
+    [Authorize(Roles = "Admin")]
     [Route("[controller]")]
     [Produces("application/json")]
     public class ProceduresController : ControllerBase
@@ -18,6 +20,7 @@ namespace HappyPaws.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<ProcedureDTO>), (StatusCodes.Status200OK))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync()
@@ -30,6 +33,7 @@ namespace HappyPaws.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ProcedureDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync(Guid id)

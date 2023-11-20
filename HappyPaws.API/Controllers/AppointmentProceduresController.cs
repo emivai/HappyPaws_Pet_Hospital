@@ -1,25 +1,31 @@
-﻿using HappyPaws.API.Contracts.DTOs.AppointmentProcedureDTOs;
+﻿using HappyPaws.API.Auth.Policies;
+using HappyPaws.API.Contracts.DTOs.AppointmentProcedureDTOs;
 using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Exceptions.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Produces("application/json")]
     public class AppointmentProceduresController : BaseController
     {
         private readonly IAppointmentProcedureService _appointmentProceduresService;
         private readonly IAppointmentService _appointmentsService;
         private readonly IProcedureService _proceduresService;
+        private readonly IAuthorizationService _authorizationService;
 
         public AppointmentProceduresController(IAppointmentProcedureService appointmentProceduresService, 
                                                 IAppointmentService appointmentsService, 
-                                                IProcedureService proceduresService)
+                                                IProcedureService proceduresService, 
+                                                IAuthorizationService authorizationService)
         {
             _appointmentProceduresService = appointmentProceduresService;
             _appointmentsService = appointmentsService;
             _proceduresService = proceduresService;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet("Appointments/{appointmentId}/[controller]")]
@@ -28,6 +34,14 @@ namespace HappyPaws.API.Controllers
         public async Task<IActionResult> GetAsync(Guid appointmentId)
         {
             var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
+
+            var ownerAuthResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+            var doctorAuthResult = await _authorizationService.AuthorizeAsync(User, appointment.TimeSlot.UserId, PolicyNames.Owner);
+
+            if (!ownerAuthResult.Succeeded && !doctorAuthResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             var appointmentProcedures = await _appointmentProceduresService.GetAllAsync(appointmentId);
 
@@ -43,6 +57,14 @@ namespace HappyPaws.API.Controllers
         {
             var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
 
+            var ownerAuthResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+            var doctorAuthResult = await _authorizationService.AuthorizeAsync(User, appointment.TimeSlot.UserId, PolicyNames.Owner);
+
+            if (!ownerAuthResult.Succeeded && !doctorAuthResult.Succeeded)
+            {
+                return Forbid();
+            }
+
             var appointmentProcedure = await _appointmentProceduresService.GetAsync(id);
 
             if (appointmentProcedure == null || appointmentProcedure.AppointmentId != appointmentId) throw new ResourceNotFoundException();
@@ -56,6 +78,13 @@ namespace HappyPaws.API.Controllers
         public async Task<IActionResult> CreateAsync(Guid appointmentId, CreateAppointmentProcedureDTO appointmentProcedureDTO)
         {
             var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
+
+            var ownerAuthResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+
+            if (!ownerAuthResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             var procedure = await _proceduresService.GetAsync(appointmentProcedureDTO.ProcedureId) ?? throw new BadRequestException("The specified procedureId does not exist.");
 
@@ -75,6 +104,13 @@ namespace HappyPaws.API.Controllers
             var appointmentProcedure = await _appointmentProceduresService.GetAsync(id) ?? throw new ResourceNotFoundException();
 
             var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
+
+            var ownerAuthResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+
+            if (!ownerAuthResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             if (appointmentProcedure.AppointmentId != appointmentId) throw new ResourceNotFoundException();
 

@@ -2,7 +2,7 @@
 
 namespace HappyPaws.Core.Entities
 {
-    public class Note : Entity
+    public class Note : Entity, IUserOwnedResource
     {
         public string Value { get; set; }
         public Guid AppointmentId { get; set; }

@@ -3,8 +3,8 @@ using HappyPaws.Core.Enums;
 
 namespace HappyPaws.Core.Entities
 {
-    public class User : Entity
-    {
+    public class User : Entity 
+    { 
         public UserType Type { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

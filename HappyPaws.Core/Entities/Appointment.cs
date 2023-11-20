@@ -3,7 +3,7 @@ using HappyPaws.Core.Enums;
 
 namespace HappyPaws.Core.Entities
 {
-    public class Appointment : Entity
+    public class Appointment : Entity, IUserOwnedResource
     {
         public AppointmentStatus Status { get; set; }
         public Guid PetId { get; set; }

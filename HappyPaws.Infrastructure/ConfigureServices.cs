@@ -23,7 +23,8 @@ namespace HappyPaws.Infrastructure
                 .AddScoped<IProcedureRepository, ProcedureRepository>()
                 .AddScoped<ITimeSlotRepository, TimeSlotRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
-                .AddTransient<ITokenManager, TokenManager>();
+                .AddTransient<ITokenManager, TokenManager>()
+                .AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
 
             return services;
         }

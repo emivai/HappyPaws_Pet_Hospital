@@ -52,7 +52,6 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
                 fromDb.Name = pet.Name;
                 fromDb.Birthdate = pet.Birthdate;
                 fromDb.Photo = pet.Photo ?? fromDb.Photo;
-                fromDb.OwnerId = pet.OwnerId;
             }
 
             await _context.SaveChangesAsync();

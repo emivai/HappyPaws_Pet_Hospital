@@ -13,6 +13,7 @@ namespace HappyPaws.Infrastructure
         public DbSet<Procedure> Procedures => Set<Procedure>();
         public DbSet<TimeSlot> TimeSlots => Set<TimeSlot>();
         public DbSet<User> Users => Set<User>();
+        public DbSet<RefreshTokenEntity> RefreshTokens => Set<RefreshTokenEntity>();
 
         public DatabaseContext(DbContextOptions options) : base(options) { }
 

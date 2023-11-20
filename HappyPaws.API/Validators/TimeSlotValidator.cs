@@ -15,8 +15,6 @@ namespace HappyPaws.API.Validators
             RuleFor(timeSlot => timeSlot.End).GreaterThanOrEqualTo(DateTime.UtcNow).WithMessage("End has to be in the future.");
             RuleFor(timeSlot => timeSlot.End).GreaterThanOrEqualTo(timeSlot => timeSlot.Start.AddMinutes(15)).WithMessage("End has to be at least 15 minutes later than start.");
             RuleFor(timeSlot => timeSlot.End).LessThan(DateTime.UtcNow.AddYears(1)).WithMessage("End cannot be more than 1 year in the future.");
-
-            RuleFor(timeSlot => timeSlot.DoctorId).NotEmpty().WithMessage("DoctorId is required.");
         }
     }
 
@@ -32,8 +30,6 @@ namespace HappyPaws.API.Validators
             RuleFor(timeSlot => timeSlot.End).GreaterThanOrEqualTo(DateTime.UtcNow).WithMessage("End has to be in the future.");
             RuleFor(timeSlot => timeSlot.End).GreaterThanOrEqualTo(timeSlot => timeSlot.Start.AddMinutes(15)).WithMessage("End has to be at least 15 minutes later than start.");
             RuleFor(timeSlot => timeSlot.End).LessThan(DateTime.UtcNow.AddYears(1)).WithMessage("End cannot be more than 1 year in the future.");
-
-            RuleFor(timeSlot => timeSlot.DoctorId).NotEmpty().WithMessage("DoctorId is required.");
         }
     }
 }

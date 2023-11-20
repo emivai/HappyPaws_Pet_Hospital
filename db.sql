@@ -66,3 +66,11 @@ CREATE TABLE appointment_procedures (
    	CONSTRAINT fk_procedure FOREIGN KEY(procedure_id) REFERENCES procedures(id),
 	CONSTRAINT fk_appointment FOREIGN KEY(appointment_id) REFERENCES appointments(id)
 );
+
+create table refresh_tokens(
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+user_id uuid not null,
+token string not null,
+expires timestamptz not null,
+CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
+);

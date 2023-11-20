@@ -2,7 +2,7 @@
 
 namespace HappyPaws.Core.Entities
 {
-    public class AppointmentProcedure : Entity
+    public class AppointmentProcedure : Entity, IUserOwnedResource
     {
         public Guid ProcedureId { get; set; }
         public Guid AppointmentId { get; set; }

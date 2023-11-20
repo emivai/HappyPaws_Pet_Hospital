@@ -1,7 +1,9 @@
-﻿using HappyPaws.API.Contracts.DTOs.PetDTOs;
+﻿using HappyPaws.API.Auth.Policies;
+using HappyPaws.API.Contracts.DTOs.PetDTOs;
 using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Enums;
 using HappyPaws.Core.Exceptions.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
@@ -13,14 +15,17 @@ namespace HappyPaws.API.Controllers
     {
         private readonly IPetService _petsService;
         private readonly IUserService _usersService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public PetsController(IPetService petsService, IUserService usersService)
+        public PetsController(IPetService petsService, IUserService usersService, IAuthorizationService authorizationService)
         {
             _petsService = petsService;
             _usersService = usersService;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(IEnumerable<PetDTO>), (StatusCodes.Status200OK))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync()
@@ -39,24 +44,29 @@ namespace HappyPaws.API.Controllers
         {
             var pet = await _petsService.GetAsync(id) ?? throw new ResourceNotFoundException();
 
+            var authResult = await _authorizationService.AuthorizeAsync(User, pet, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Ok(PetDTO.FromDomain(pet));
         }
 
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(typeof(PetDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync(CreatePetDTO petDTO)
         {
-            if (!ModelState.IsValid)
-                throw new ResourceNotFoundException(); ;
+            var userId = new Guid(User.FindFirst("UserId").Value);
 
-            var owner = await _usersService.GetAsync(petDTO.OwnerId);
+            var owner = await _usersService.GetAsync(userId);
 
             if (owner == null) throw new ResourceNotFoundException();
 
-            if (owner.Type != UserType.Client) throw new UserTypeException(UserType.Client);
-
-            var created = await _petsService.AddAsync(CreatePetDTO.ToDomain(petDTO));
+            var created = await _petsService.AddAsync(CreatePetDTO.ToDomain(petDTO, userId));
 
             return StatusCode(StatusCodes.Status201Created, PetDTO.FromDomain(created));
         }
@@ -70,6 +80,13 @@ namespace HappyPaws.API.Controllers
             var pet = await _petsService.GetAsync(id);
 
             if (pet == null) throw new ResourceNotFoundException();
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, pet, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             var updated = await _petsService.UpdateAsync(id, UpdatePetDTO.ToDomain(petDTO));
 
@@ -85,6 +102,13 @@ namespace HappyPaws.API.Controllers
             var pet = await _petsService.GetAsync(id) ?? throw new ResourceNotFoundException();
 
             if (pet.Appointments != null && pet.Appointments.Any(a => a.Status == AppointmentStatus.Scheduled)) throw new BadRequestException("Pet that has appointments with status 'scheduled' cannot be deleted.");
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, pet, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             await _petsService.DeleteAsync(id);
 

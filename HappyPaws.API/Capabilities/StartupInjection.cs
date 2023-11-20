@@ -1,5 +1,7 @@
 ﻿using HappyPaws.Infrastructure;
 using HappyPaws.Application;
+using HappyPaws.API.Auth.Handlers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HappyPaws.API.Capabilities
 {
@@ -9,7 +11,8 @@ namespace HappyPaws.API.Capabilities
         {
             services
                 .ConfigureInfrastructureServices(configuration)
-                .ConfigureApplicationServices();
+                .ConfigureApplicationServices()
+                .AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>();
 
             return services;
         }

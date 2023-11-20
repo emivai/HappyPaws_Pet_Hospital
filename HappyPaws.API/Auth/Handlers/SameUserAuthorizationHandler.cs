@@ -1,19 +1,20 @@
-﻿using HappyPaws.API.Auth.Contracts.Model;
+﻿using HappyPaws.Core.Entities;
+using HappyPaws.Core.Entities.Common;
 using HappyPaws.Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 
 namespace HappyPaws.API.Auth.Handlers
 {
-    public class SameUserAuthorizationHandler : AuthorizationHandler<SameUserRequirement, IUserOwnedResource>
-    {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, SameUserRequirement requirement, IUserOwnedResource resource)
+        public class SameUserAuthorizationHandler : AuthorizationHandler<SameUserRequirement, User>
         {
-            if (context.User.IsInRole(UserType.Admin.ToString()) || context.User.FindFirst("UserId")?.Value == resource.UserId.ToString())
+            protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, SameUserRequirement requirement, User user)
             {
-                context.Succeed(requirement);
+                if (context.User.IsInRole(UserType.Admin.ToString()) || context.User.FindFirst("UserId")?.Value == user.Id.ToString())
+                {
+                    context.Succeed(requirement);
+                }
+                return Task.CompletedTask;
             }
-            return Task.CompletedTask;
         }
-    }
-    public record SameUserRequirement : IAuthorizationRequirement;
+        public record SameUserRequirement : IAuthorizationRequirement;
 }

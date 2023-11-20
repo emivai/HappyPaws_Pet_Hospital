@@ -19,8 +19,6 @@ namespace HappyPaws.API.Validators
             RuleFor(pet => pet.Birthdate).NotNull().WithMessage("Birthdate is required.");
             RuleFor(pet => pet.Birthdate).LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Birthdate cannot be in the future.");
             RuleFor(pet => pet.Birthdate).GreaterThanOrEqualTo(DateTime.UtcNow.AddYears(-200)).WithMessage("Birthdate cannot be more than 200 years old.");
-
-            RuleFor(pet => pet.OwnerId).NotNull().WithMessage("OwnerId is required.");
         }
     }
 

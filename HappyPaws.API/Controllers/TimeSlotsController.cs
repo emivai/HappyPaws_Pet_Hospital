@@ -1,23 +1,29 @@
-﻿using HappyPaws.API.Contracts.DTOs.TimeSlotDTOs;
+﻿using HappyPaws.API.Auth.Policies;
+using HappyPaws.API.Contracts.DTOs.TimeSlotDTOs;
 using HappyPaws.Application.Interfaces;
+using HappyPaws.Core.Entities;
 using HappyPaws.Core.Enums;
 using HappyPaws.Core.Exceptions.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     [Produces("application/json")]
     public class TimeSlotsController : ControllerBase
     {
         private readonly ITimeSlotService _timeSlotService;
         private readonly IUserService _userService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public TimeSlotsController(ITimeSlotService timeSlotService, IUserService userService)
+        public TimeSlotsController(ITimeSlotService timeSlotService, IUserService userService, IAuthorizationService authorizationService)
         {
             _timeSlotService = timeSlotService;
             _userService = userService;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -49,13 +55,15 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync(CreateTimeSlotDTO timeSlotDTO)
         {
-            var doctor = await _userService.GetAsync(timeSlotDTO.DoctorId);
+            var userId = new Guid(User.FindFirst("UserId").Value);
+
+            var doctor = await _userService.GetAsync(userId);
 
             if (doctor == null) throw new ResourceNotFoundException();
 
             if (doctor.Type != UserType.Doctor) throw new UserTypeException(UserType.Doctor);
 
-            var created = await _timeSlotService.AddAsync(CreateTimeSlotDTO.ToDomain(timeSlotDTO));
+            var created = await _timeSlotService.AddAsync(CreateTimeSlotDTO.ToDomain(timeSlotDTO, userId));
 
             return StatusCode(StatusCodes.Status201Created, TimeSlotDTO.FromDomain(created));
         }
@@ -66,9 +74,11 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync(Guid id, UpdateTimeSlotDTO timeSlotDTO)
         {
+            var userId = new Guid(User.FindFirst("UserId").Value);
+
             var timeSlot = _timeSlotService.GetAsync(id);
 
-            var doctor = await _userService.GetAsync(timeSlotDTO.DoctorId);
+            var doctor = await _userService.GetAsync(userId);
 
             if (doctor == null) throw new ResourceNotFoundException();
 
@@ -76,7 +86,14 @@ namespace HappyPaws.API.Controllers
 
             if (timeSlot == null) throw new ResourceNotFoundException();
 
-            var updated = await _timeSlotService.UpdateAsync(id, UpdateTimeSlotDTO.ToDomain(timeSlotDTO));
+            var authResult = await _authorizationService.AuthorizeAsync(User, timeSlot, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+
+            var updated = await _timeSlotService.UpdateAsync(id, UpdateTimeSlotDTO.ToDomain(timeSlotDTO, userId));
 
             return Ok(TimeSlotDTO.FromDomain(updated));
         }
@@ -90,6 +107,13 @@ namespace HappyPaws.API.Controllers
             var timeSlot = _timeSlotService.GetAsync(id);
 
             if (timeSlot == null) throw new ResourceNotFoundException();
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, timeSlot, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             await _timeSlotService.DeleteAsync(id);
 

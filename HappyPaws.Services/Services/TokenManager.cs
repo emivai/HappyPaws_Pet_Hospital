@@ -1,9 +1,11 @@
 ﻿using HappyPaws.Application.Interfaces;
+using HappyPaws.Core.Auth;
 using HappyPaws.Core.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace HappyPaws.Application.Services
@@ -34,7 +36,7 @@ namespace HappyPaws.Application.Services
             (
                 issuer: _issuer,
                 audience: _audience,
-                expires: DateTime.UtcNow.AddHours(1),
+                expires: DateTime.UtcNow.AddMinutes(1),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(_authSigningKey, SecurityAlgorithms.HmacSha256)
             );
@@ -42,10 +44,21 @@ namespace HappyPaws.Application.Services
             return new JwtSecurityTokenHandler().WriteToken(accessSecurityToken);
         }
 
+        public RefreshToken CreateRefreshToken()
+        {
+            return new RefreshToken{ Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64))};
+        }
+
         public JwtSecurityToken? DecodeAccessToken(string accessToken)
         {
             var handler = new JwtSecurityTokenHandler();
             return handler.ReadJwtToken(accessToken);
+        }
+
+        public RefreshToken InvalidateRefreshToken(RefreshToken token)
+        {
+            token.Expiration = DateTime.UtcNow.AddMinutes(-1);
+            return token;
         }
     }
 }

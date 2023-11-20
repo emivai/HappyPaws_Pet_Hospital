@@ -12,7 +12,7 @@ namespace HappyPaws.API.Controllers
 
             if (userId == null)
             {
-                throw new ForbiddenException("Access token is missing required \"UserId\" field.");
+                throw new ForbiddenException();
             }
 
             return new Guid(userId);

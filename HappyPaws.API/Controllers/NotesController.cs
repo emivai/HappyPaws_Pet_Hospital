@@ -1,23 +1,28 @@
-﻿using HappyPaws.API.Contracts.DTOs.NoteDTOs;
+﻿using HappyPaws.API.Auth.Policies;
+using HappyPaws.API.Contracts.DTOs.NoteDTOs;
 using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Exceptions.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Produces("application/json")]
     public class NotesController : BaseController
     {
         private readonly INoteService _noteService;
         private readonly IAppointmentService _appointmentService;
         private readonly IPetService _petService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public NotesController(INoteService noteService, IAppointmentService appointmentService, IPetService petService)
+        public NotesController(INoteService noteService, IAppointmentService appointmentService, IPetService petService, IAuthorizationService authorizationService)
         {
             _noteService = noteService;
             _appointmentService = appointmentService;
             _petService = petService;
+            _authorizationService = authorizationService;
         }
 
         [Route("Pets/{petId}/Appointments/{appointmentId}/[controller]")]
@@ -31,6 +36,14 @@ namespace HappyPaws.API.Controllers
             var appointment = await _appointmentService.GetAsync(appointmentId);
 
             if (appointment == null || appointment.PetId != petId) throw new ResourceNotFoundException();
+
+            var ownerAuthResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+            var doctorAuthResult = await _authorizationService.AuthorizeAsync(User, appointment.TimeSlot.UserId, PolicyNames.Owner);
+
+            if (!ownerAuthResult.Succeeded && !doctorAuthResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             var notes = await _noteService.GetAllAsync(appointmentId);
 
@@ -51,6 +64,14 @@ namespace HappyPaws.API.Controllers
 
             if (appointment == null || appointment.PetId != petId) throw new ResourceNotFoundException();
 
+            var ownerAuthResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+            var doctorAuthResult = await _authorizationService.AuthorizeAsync(User, appointment.TimeSlot.UserId, PolicyNames.Owner);
+
+            if (!ownerAuthResult.Succeeded && !doctorAuthResult.Succeeded)
+            {
+                return Forbid();
+            }
+
             var note = await _noteService.GetAsync(noteId) ?? throw new ResourceNotFoundException(); 
 
             if (note == null || note.AppointmentId != appointmentId) throw new ResourceNotFoundException();
@@ -69,6 +90,14 @@ namespace HappyPaws.API.Controllers
             var appointment = await _appointmentService.GetAsync(appointmentId);
 
             if (appointment == null || appointment.PetId != petId) throw new ResourceNotFoundException();
+
+            var ownerAuthResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+            var doctorAuthResult = await _authorizationService.AuthorizeAsync(User, appointment.TimeSlot.UserId, PolicyNames.Owner);
+
+            if (!ownerAuthResult.Succeeded && !doctorAuthResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             var userId = GetUserId();
 
@@ -93,6 +122,13 @@ namespace HappyPaws.API.Controllers
 
             if (note == null || note.AppointmentId != appointmentId) throw new ResourceNotFoundException();
 
+            var authResult = await _authorizationService.AuthorizeAsync(User, note, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+
             var userId = GetUserId();
 
             var updated = await _noteService.UpdateAsync(noteId, UpdateNoteDTO.ToDomain(noteDTO, userId));
@@ -116,6 +152,13 @@ namespace HappyPaws.API.Controllers
             var note = await _noteService.GetAsync(noteId);
 
             if (note == null || note.AppointmentId != appointmentId) throw new ResourceNotFoundException();
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, note, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             await _noteService.DeleteAsync(noteId);
 

@@ -14,7 +14,8 @@ namespace HappyPaws.Application
                     .AddScoped<IPetService, PetService>()
                     .AddScoped<IProcedureService, ProcedureService>()
                     .AddScoped<ITimeSlotService, TimeSlotService>()
-                    .AddScoped<IUserService, UserService>();
+                    .AddScoped<IUserService, UserService>()
+                    .AddScoped<IRefreshTokenService, RefreshTokenService>();
 
             return services;
         }

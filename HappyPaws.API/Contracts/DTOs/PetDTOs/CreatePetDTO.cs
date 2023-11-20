@@ -9,9 +9,8 @@ namespace HappyPaws.API.Contracts.DTOs.PetDTOs
         public string Name { get; set; }
         public DateTime Birthdate { get; set; }
         public string? Photo { get; set; }
-        public Guid OwnerId { get; set; }
 
-        public static Pet ToDomain(CreatePetDTO petDTO)
+        public static Pet ToDomain(CreatePetDTO petDTO, Guid userId)
         {
             return new Pet
             {
@@ -19,7 +18,7 @@ namespace HappyPaws.API.Contracts.DTOs.PetDTOs
                 Name = petDTO.Name,
                 Birthdate = petDTO.Birthdate,
                 Photo = petDTO.Photo,
-                OwnerId = petDTO.OwnerId
+                UserId = userId
             };
         }
     }

@@ -21,7 +21,7 @@ namespace HappyPaws.API.Contracts.DTOs.PetDTOs
                 Name = pet.Name,
                 Birthdate = pet.Birthdate,
                 Photo = pet.Photo,
-                OwnerId = pet.OwnerId
+                OwnerId = pet.UserId
             };
         }
     }

@@ -18,7 +18,7 @@ namespace HappyPaws.API.Contracts.DTOs.TimeSlotDTOs
                 Start = timeSlot.Start,
                 End = timeSlot.End,
                 Available = timeSlot.Available,
-                DoctorId = timeSlot.DoctorId
+                DoctorId = timeSlot.UserId
             };
         }
     }

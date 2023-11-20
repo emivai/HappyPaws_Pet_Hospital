@@ -28,7 +28,8 @@ namespace HappyPaws.API.Capabilities
         {
             return services.AddAuthorization(o =>
             {
-                o.AddPolicy(PolicyNames.SameUser, policy => policy.Requirements.Add(new SameUserRequirement()));
+                o.AddPolicy(PolicyNames.Owner, policy => policy.Requirements.Add(new OwnerRequirement()));
+                o.AddPolicy(PolicyNames.SameUser, policy => policy.Requirements.Add(new OwnerRequirement()));
             });
         }
     }

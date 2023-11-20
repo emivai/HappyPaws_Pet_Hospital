@@ -1,23 +1,28 @@
-﻿using HappyPaws.API.Contracts.DTOs.AppointmentDTOs;
+﻿using HappyPaws.API.Auth.Policies;
+using HappyPaws.API.Contracts.DTOs.AppointmentDTOs;
 using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Exceptions.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HappyPaws.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Produces("application/json")]
     public class AppointmentsController : BaseController
     {
         private readonly IAppointmentService _appointmentsService;
         private readonly ITimeSlotService _timeSlotService;
         private readonly IPetService _petService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public AppointmentsController(IAppointmentService appointmentsService, ITimeSlotService timeSlotService, IPetService petService)
+        public AppointmentsController(IAppointmentService appointmentsService, ITimeSlotService timeSlotService, IPetService petService, IAuthorizationService authorizationService)
         {
             _appointmentsService = appointmentsService;
             _timeSlotService = timeSlotService;
             _petService = petService;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet("Pets/{petId}/[controller]")]
@@ -26,6 +31,13 @@ namespace HappyPaws.API.Controllers
         public async Task<IActionResult> GetAllAsyncByPetId(Guid petId)
         {
             var pet = await _petService.GetAsync(petId);
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, pet, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             var appointments = await _appointmentsService.GetAllAsync(petId);
 
@@ -45,6 +57,14 @@ namespace HappyPaws.API.Controllers
 
             if (appointment.PetId != petId) throw new ResourceNotFoundException();
 
+            var ownerAuthResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+            var doctorAuthResult = await _authorizationService.AuthorizeAsync(User, appointment.TimeSlot.UserId, PolicyNames.Owner);
+
+            if (!ownerAuthResult.Succeeded && !doctorAuthResult.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Ok(AppointmentDTO.FromDomain(appointment));
         }
 
@@ -61,6 +81,13 @@ namespace HappyPaws.API.Controllers
             if (timeSlot.Start < DateTime.UtcNow) throw new BadRequestException("Cannot use timeslot from the past.");
 
             var pet = await _petService.GetAsync(petId) ?? throw new ResourceNotFoundException();
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, pet, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             var userId = GetUserId();
 
@@ -80,6 +107,13 @@ namespace HappyPaws.API.Controllers
             var appointment = await _appointmentsService.GetAsync(appointmentId);
 
             if (appointment == null || appointment.PetId != petId ) throw new ResourceNotFoundException();
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             var timeSlot = await _timeSlotService.GetAsync(appointmentDTO.TimeSlotId);
 
@@ -106,6 +140,13 @@ namespace HappyPaws.API.Controllers
             var appointment = await _appointmentsService.GetAsync(appointmentId);
 
             if (appointment == null || appointment.PetId != petId) throw new ResourceNotFoundException();
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, appointment, PolicyNames.Owner);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             await _appointmentsService.DeleteAsync(appointmentId);
 

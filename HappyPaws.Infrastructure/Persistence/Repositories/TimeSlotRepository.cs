@@ -50,7 +50,7 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
             {
                 fromDb.Start = timeSlot.Start;
                 fromDb.End = timeSlot.End;
-                fromDb.DoctorId = timeSlot.DoctorId;
+                fromDb.UserId = timeSlot.UserId;
                 fromDb.Available = timeSlot.Available;
             }
 
