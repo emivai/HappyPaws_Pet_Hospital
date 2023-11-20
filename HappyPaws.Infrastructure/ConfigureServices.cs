@@ -12,7 +12,7 @@ namespace HappyPaws.Infrastructure
     {
         public static IServiceCollection ConfigureInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetValue<string>("ConnectionStrings:Postgres");
+            var connectionString = configuration.GetConnectionString("Postgres");
 
             services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connectionString));
 
