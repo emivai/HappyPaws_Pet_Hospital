@@ -18,6 +18,8 @@ namespace HappyPaws.API.Capabilities
             })
             .AddJwtBearer(o =>
             {
+                o.TokenValidationParameters.ValidateLifetime = true;
+                o.TokenValidationParameters.ClockSkew = TimeSpan.Zero;
                 o.TokenValidationParameters.ValidAudience = configuration["JWT:ValidAudience"];
                 o.TokenValidationParameters.ValidIssuer = configuration["JWT:ValidIssuer"];
                 o.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
