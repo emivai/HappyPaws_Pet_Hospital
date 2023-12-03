@@ -1,5 +1,6 @@
 ﻿using HappyPaws.Application.Interfaces;
 using HappyPaws.Application.Services;
+using HappyPaws.Application.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HappyPaws.Application

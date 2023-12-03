@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Web App HappyPawsAPI with API Ma
 on:
   push:
     branches:
-    - authorization
+    - final
 env:
   AZURE_WEBAPP_NAME: HappyPawsAPI
   AZURE_WEBAPP_PACKAGE_PATH: .\publish

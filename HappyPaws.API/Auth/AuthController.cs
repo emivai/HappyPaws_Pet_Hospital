@@ -7,6 +7,7 @@ using HappyPaws.Core.Entities;
 using HappyPaws.Core.Exceptions.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace HappyPaws.API.Auth
 {

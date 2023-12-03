@@ -1,6 +1,7 @@
 ﻿using HappyPaws.API.Auth.Policies;
 using HappyPaws.API.Contracts.DTOs.UserDTOs;
 using HappyPaws.Application.Interfaces;
+using HappyPaws.Core.Enums;
 using HappyPaws.Core.Exceptions.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,12 +25,16 @@ namespace HappyPaws.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [ProducesResponseType(typeof(IEnumerable<UserDTO>), (StatusCodes.Status200OK))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAsync([FromQuery] UserType? type = null)
         {
-            var users = await _usersService.GetAllAsync();
+            if(User.IsInRole("Client") && type != UserType.Doctor) return Forbid();
+
+            if (User.IsInRole("Doctor") && type != UserType.Doctor && type != UserType.Client) return Forbid();
+
+            var users = await _usersService.GetAllAsync(type);
 
             var result = users.Select(UserDTO.FromDomain).ToList();
 
@@ -46,10 +51,8 @@ namespace HappyPaws.API.Controllers
 
             var authResult = await _authorizationService.AuthorizeAsync(User, user, PolicyNames.SameUser);
 
-            if (!authResult.Succeeded)
-            {
-                return Forbid();
-            }
+            if(User.IsInRole("Client") && user.Type != UserType.Doctor && !authResult.Succeeded) return Forbid();
+            if (User.IsInRole("Doctor") && user.Type == UserType.Admin) return Forbid();
 
             if (user == null) throw new ResourceNotFoundException();
 

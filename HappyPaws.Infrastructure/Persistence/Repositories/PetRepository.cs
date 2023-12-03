@@ -32,9 +32,19 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Pet>> GetAllAsync()
+        public async Task<List<Pet>> GetAllAsync(Guid? userId = null)
         {
+            if(userId != null)
+                return await _context.Pets.Where(pet => pet.UserId == userId).Include(p => p.Appointments).ToListAsync();
+
             return await _context.Pets.Include(p => p.Appointments).ToListAsync();
+        }
+
+        public async Task<List<Pet>> GetAllForDoctorAsync(Guid userId)
+        {
+            var petIds = await _context.Appointments.Include(a => a.TimeSlot).Where(a => a.TimeSlot.UserId == userId).Select(a => a.PetId).ToListAsync();
+
+            return await _context.Pets.Include(p => p.Appointments).Where(p => petIds.Contains(p.Id)).ToListAsync();
         }
 
         public async Task<Pet> GetAsync(Guid id)

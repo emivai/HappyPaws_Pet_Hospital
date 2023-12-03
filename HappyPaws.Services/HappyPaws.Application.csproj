@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HappyPaws.Core\HappyPaws.Core.csproj" />
+    <ProjectReference Include="..\HappyPaws.EmailService\HappyPaws.EmailService.csproj" />
   </ItemGroup>
 
 </Project>

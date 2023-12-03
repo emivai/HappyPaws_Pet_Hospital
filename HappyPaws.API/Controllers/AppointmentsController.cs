@@ -34,12 +34,12 @@ namespace HappyPaws.API.Controllers
 
             var authResult = await _authorizationService.AuthorizeAsync(User, pet, PolicyNames.Owner);
 
-            if (!authResult.Succeeded)
-            {
-                return Forbid();
-            }
+            if (User.IsInRole("Client") && !authResult.Succeeded) return Forbid();
 
-            var appointments = await _appointmentsService.GetAllAsync(petId);
+            List<Core.Entities.Appointment> appointments;
+
+            if (User.IsInRole("Doctor")) appointments = await _appointmentsService.GetAllForDoctorAsync(petId, new Guid(User.FindFirst("UserId")?.Value));
+            else appointments = await _appointmentsService.GetAllAsync(petId);
 
             var result = appointments.Select(AppointmentDTO.FromDomain).ToList();
 

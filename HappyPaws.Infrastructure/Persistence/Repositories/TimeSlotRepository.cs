@@ -34,7 +34,7 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
 
         public async Task<List<TimeSlot>> GetAllAsync()
         {
-            return await _context.TimeSlots.ToListAsync();
+            return await _context.TimeSlots.Where(t => t.Start > DateTime.UtcNow).ToListAsync();
         }
 
         public async Task<TimeSlot> GetAsync(Guid id)

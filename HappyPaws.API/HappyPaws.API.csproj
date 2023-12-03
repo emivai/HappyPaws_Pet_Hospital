@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HappyPaws.Core\HappyPaws.Core.csproj" />
+    <ProjectReference Include="..\HappyPaws.EmailService\HappyPaws.EmailService.csproj" />
     <ProjectReference Include="..\HappyPaws.Infrastructure\HappyPaws.Infrastructure.csproj" />
     <ProjectReference Include="..\HappyPaws.Services\HappyPaws.Application.csproj" />
   </ItemGroup>

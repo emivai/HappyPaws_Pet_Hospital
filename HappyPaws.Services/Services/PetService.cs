@@ -23,9 +23,14 @@ namespace HappyPaws.Application.Services
             await _petRepository.DeleteAsync(id);
         }
 
-        public async Task<List<Pet>> GetAllAsync()
+        public async Task<List<Pet>> GetAllAsync(Guid? userId)
         {
-            return await _petRepository.GetAllAsync();
+            return await _petRepository.GetAllAsync(userId);
+        }
+
+        public async Task<List<Pet>> GetAllForDoctorAsync(Guid userId)
+        {
+            return await _petRepository.GetAllForDoctorAsync(userId);
         }
 
         public async Task<Pet> GetAsync(Guid id)

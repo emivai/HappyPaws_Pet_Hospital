@@ -25,12 +25,16 @@ namespace HappyPaws.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [ProducesResponseType(typeof(IEnumerable<PetDTO>), (StatusCodes.Status200OK))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync()
         {
-            var pets = await _petsService.GetAllAsync();
+            List<Core.Entities.Pet> pets;
+
+            if (User.IsInRole("Client")) pets = await _petsService.GetAllAsync(new Guid(User.FindFirst("UserId")?.Value));
+            else if (User.IsInRole("Doctor")) pets = await _petsService.GetAllForDoctorAsync(new Guid(User.FindFirst("UserId")?.Value));
+            else pets = await _petsService.GetAllAsync(null);
 
             var result = pets.Select(PetDTO.FromDomain).ToList();
 
@@ -47,7 +51,7 @@ namespace HappyPaws.API.Controllers
 
             var authResult = await _authorizationService.AuthorizeAsync(User, pet, PolicyNames.Owner);
 
-            if (!authResult.Succeeded)
+            if (User.IsInRole("Client") && !authResult.Succeeded)
             {
                 return Forbid();
             }

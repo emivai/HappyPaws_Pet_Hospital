@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace HappyPaws.Application.Services
+namespace HappyPaws.Application.Utilities
 {
     public class TokenManager : ITokenManager
     {

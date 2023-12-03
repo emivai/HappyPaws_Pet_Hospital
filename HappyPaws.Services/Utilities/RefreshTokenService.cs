@@ -2,7 +2,7 @@
 using HappyPaws.Core.Entities;
 using HappyPaws.Core.Interfaces;
 
-namespace HappyPaws.Application.Services
+namespace HappyPaws.Application.Utilities
 {
     public class RefreshTokenService : IRefreshTokenService
     {
@@ -24,7 +24,7 @@ namespace HappyPaws.Application.Services
 
         public async Task<RefreshTokenEntity> GetAsync(Guid userId)
         {
-           return await _refreshTokenRepository.GetAsync(userId);
+            return await _refreshTokenRepository.GetAsync(userId);
         }
 
         public async Task UpdateAsync(Guid userId, RefreshTokenEntity refreshToken)

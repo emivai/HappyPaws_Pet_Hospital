@@ -1,6 +1,7 @@
 ﻿using HappyPaws.Application.Extensions;
 using HappyPaws.Application.Interfaces;
 using HappyPaws.Core.Entities;
+using HappyPaws.Core.Enums;
 using HappyPaws.Core.Interfaces;
 
 namespace HappyPaws.Application.Services
@@ -31,9 +32,9 @@ namespace HappyPaws.Application.Services
             await _userRepository.DeleteAsync(id);
         }
 
-        public async Task<List<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync(UserType? type)
         {
-            return await _userRepository.GetAllAsync();
+            return await _userRepository.GetAllAsync(type);
         }
 
         public async Task<User> GetAsync(Guid id)
