@@ -56,9 +56,9 @@ Neprisijungęs naudotojas galės:
 
 Betkurios rolės prisijungęs vartotojas galės:
 
-      1. Redaguoti savo paskyros duomenis
-      2. Ištrinti savo paskyrą
-      3. Atsijungti
+1. Redaguoti savo paskyros duomenis
+2. Ištrinti savo paskyrą
+3. Atsijungti
 
 Klientas galės:
 
