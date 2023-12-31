@@ -1112,34 +1112,34 @@ Sistemos sudedamosios dalys:
 
 ![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/af744d2a-1619-4b93-b2d2-eddcc7653c0e)
 
-**4****.31 pav**. Timeslot POST metodas
+**4.31 pav**. Timeslot POST metodas
 
 ![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/d648d013-f194-43f3-ad0f-76a58c52a74b)
 
-**4****.32 pav**. Timeslot GET pagal id metodas
+**4.32 pav**. Timeslot GET pagal id metodas
 
 ![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/5b0b9325-d4cc-4771-b0ab-921f23e09331)
 
-**4****.33 pav**. Timeslot PUT metodas
+**4.33 pav**. Timeslot PUT metodas
 
 ![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/5c98c3a6-f607-4305-abf6-f5ab4fa741df)
 
-**4****.34 pav**. Timeslot DELETE metodas
+**4.34 pav**. Timeslot DELETE metodas
 
 ![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/572f89e3-ca8d-4667-875e-242cf18ca124)
-**4****.35 pav.** User GET pagal id metodas
+**4.35 pav.** User GET pagal id metodas
 
 ![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/0463c938-e0c8-4eca-a284-3bc0c9e4cd6e)
 
-**4****.36 pav.** User GET metodas
+**4.36 pav.** User GET metodas
 
 ![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/af33c601-a45d-42d4-8f01-34097e3b9cc6)
 
-**4****.37 pav.** User PUT metodas
+**4.37 pav.** User PUT metodas
 
 ![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/d1dd14d0-8d0f-4ebe-b474-9f2c69086700)
 
-**4****.38 pav.** User DELETE metodas
+**4.38 pav.** User DELETE metodas
 
 # 5.Išvados
 
