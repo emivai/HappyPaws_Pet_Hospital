@@ -48,6 +48,7 @@ namespace HappyPaws.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ProcedureDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> CreateAsync(CreateProcedureDTO noteDTO)
         {
             var created = await _procedureService.AddAsync(CreateProcedureDTO.ToDomain(noteDTO));
@@ -59,6 +60,7 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(typeof(ProcedureDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> UpdateAsync(Guid id, UpdateProcedureDTO noteDTO)
         {
             var procedure = await _procedureService.GetAsync(id);

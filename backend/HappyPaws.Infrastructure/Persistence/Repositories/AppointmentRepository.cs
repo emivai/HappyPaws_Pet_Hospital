@@ -67,7 +67,7 @@ namespace HappyPaws.Infrastructure.Persistence.Repositories
         public async Task<Appointment> GetAsync(Guid id)
         {
             return await _context.Appointments
-                .Include(a => a.TimeSlot)
+                .Include(a => a.TimeSlot).ThenInclude(t => t.Doctor)
                 .Include(a => a.AppointmentProcedures).ThenInclude(p => p.Procedure)
                 .Include(a => a.Notes)
                 .Include(a => a.User)

@@ -64,9 +64,10 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> UpdateAsync(Guid id, UpdateUserDTO userDTO)
         {
-            var user = _usersService.GetAsync(id);
+            var user = await _usersService.GetAsync(id);
 
             if (user == null) throw new ResourceNotFoundException();
 

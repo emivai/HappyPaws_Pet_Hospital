@@ -19,7 +19,7 @@ namespace HappyPaws.API.Contracts.DTOs.TimeSlotDTOs
                 Start = timeSlot.Start,
                 End = timeSlot.End,
                 Available = timeSlot.Available,
-                Doctor = UserDTO.FromDomain(timeSlot.Doctor)
+                Doctor = timeSlot.Doctor != null ? UserDTO.FromDomain(timeSlot.Doctor) : null
             };
         }
     }

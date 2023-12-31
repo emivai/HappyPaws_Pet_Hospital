@@ -5,14 +5,14 @@ namespace HappyPaws.API.Contracts.DTOs.NoteDTOs
     public class UpdateNoteDTO
     {
         public string Value { get; set; }
-        public Guid AppointmentId { get; set; }
 
-        public static Note ToDomain(UpdateNoteDTO noteDTO, Guid userId)
+
+        public static Note ToDomain(UpdateNoteDTO noteDTO, Guid userId, Guid appointmentId)
         {
             return new Note
             {
                 Value = noteDTO.Value,
-                AppointmentId = noteDTO.AppointmentId,
+                AppointmentId = appointmentId,
                 UserId = userId
             };
         }

@@ -53,6 +53,7 @@ namespace HappyPaws.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(TimeSlotDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> CreateAsync(CreateTimeSlotDTO timeSlotDTO)
         {
             var userId = new Guid(User.FindFirst("UserId").Value);
@@ -72,11 +73,12 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(typeof(TimeSlotDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> UpdateAsync(Guid id, UpdateTimeSlotDTO timeSlotDTO)
         {
             var userId = new Guid(User.FindFirst("UserId").Value);
 
-            var timeSlot = _timeSlotService.GetAsync(id);
+            var timeSlot = await _timeSlotService.GetAsync(id);
 
             var doctor = await _userService.GetAsync(userId);
 
@@ -104,7 +106,7 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var timeSlot = _timeSlotService.GetAsync(id);
+            var timeSlot = await _timeSlotService.GetAsync(id);
 
             if (timeSlot == null) throw new ResourceNotFoundException();
 

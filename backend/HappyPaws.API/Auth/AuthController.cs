@@ -28,6 +28,7 @@ namespace HappyPaws.API.Auth
 
         [HttpPost]
         [Route("login")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Login(LoginUserDTO loginUserDTO)
         {
             var user = await _userService.GetByEmailAsync(loginUserDTO.Email);
@@ -48,15 +49,18 @@ namespace HappyPaws.API.Auth
 
         [HttpPost]
         [Route("register")]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Register(CreateUserDTO createUserDTO)
         {
             var user = await _userService.GetByEmailAsync(createUserDTO.Email);
 
             if (user != null) throw new BadRequestException("User with this email already exists");
 
-            await _userService.AddAsync(CreateUserDTO.ToDomain(createUserDTO));
+            var created = await _userService.AddAsync(CreateUserDTO.ToDomain(createUserDTO));
 
-            return Ok();
+            return StatusCode(StatusCodes.Status201Created, UserDTO.FromDomain(created));
         }
 
         [HttpGet]

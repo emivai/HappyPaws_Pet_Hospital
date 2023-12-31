@@ -26,11 +26,11 @@ namespace HappyPaws.API.Contracts.DTOs.AppointmentDTOs
                 Id = appointment.Id,
                 Status = appointment.Status,
                 Pet = PetDTO.FromDomain(appointment.Pet),
-                TimeSlot = TimeSlotDTO.FromDomain(appointment.TimeSlot),
-                Price = appointment.CalculateTotalPrice(),
+                TimeSlot = TimeSlotDTO.FromDomain(appointment.TimeSlot),            
                 User = UserDTO.FromDomain(appointment.User),
                 Notes = appointment.Notes?.Select(NoteDTO.FromDomain).ToList(),
                 AppointmentProcedures = appointment.AppointmentProcedures.Select(AppointmentProcedureDTO.FromDomain).ToList(),
+                Price = appointment.CalculateTotalPrice()
             };
    
             return appointmentDTO;

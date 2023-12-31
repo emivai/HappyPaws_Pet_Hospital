@@ -75,6 +75,7 @@ namespace HappyPaws.API.Controllers
         [HttpPost("Appointments/{appointmentId}/[controller]")]
         [ProducesResponseType(typeof(AppointmentProcedureDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> CreateAsync(Guid appointmentId, CreateAppointmentProcedureDTO appointmentProcedureDTO)
         {
             var appointment = await _appointmentsService.GetAsync(appointmentId) ?? throw new ResourceNotFoundException();
@@ -99,6 +100,7 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(typeof(AppointmentProcedureDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> UpdateAsync(Guid appointmentId, Guid id, UpdateAppointmentProcedureDTO appointmentProcedureDTO)
         {
             var appointmentProcedure = await _appointmentProceduresService.GetAsync(id) ?? throw new ResourceNotFoundException();

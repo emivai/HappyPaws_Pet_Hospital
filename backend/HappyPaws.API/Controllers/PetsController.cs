@@ -64,6 +64,7 @@ namespace HappyPaws.API.Controllers
         [Authorize]
         [ProducesResponseType(typeof(PetDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> CreateAsync(CreatePetDTO petDTO)
         {
             var userId = new Guid(User.FindFirst("UserId").Value);
@@ -82,6 +83,7 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(typeof(PetDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> UpdateAsync(Guid id, UpdatePetDTO petDTO)
         {
             var pet = await _petsService.GetAsync(id);

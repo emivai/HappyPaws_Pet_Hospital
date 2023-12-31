@@ -83,6 +83,7 @@ namespace HappyPaws.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(NoteDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> CreateAsync(Guid petId, Guid appointmentId, CreateNoteDTO noteDTO)
         {
             var pet = await _petService.GetAsync(petId) ?? throw new ResourceNotFoundException();
@@ -110,6 +111,7 @@ namespace HappyPaws.API.Controllers
         [ProducesResponseType(typeof(NoteDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> UpdateAsync(Guid petId, Guid appointmentId, Guid noteId, UpdateNoteDTO noteDTO)
         {
             var pet = await _petService.GetAsync(petId) ?? throw new ResourceNotFoundException();
@@ -131,7 +133,7 @@ namespace HappyPaws.API.Controllers
 
             var userId = GetUserId();
 
-            var updated = await _noteService.UpdateAsync(noteId, UpdateNoteDTO.ToDomain(noteDTO, userId));
+            var updated = await _noteService.UpdateAsync(noteId, UpdateNoteDTO.ToDomain(noteDTO, userId, appointmentId));
 
             return Ok(NoteDTO.FromDomain(updated));
         }
