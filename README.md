@@ -104,7 +104,7 @@ Sistemos sudedamosios dalys:
 
 2.1 pav. pavaizduota kuriamos sistemos diegimo diagrama. Sistemos talpinimui yra naudojamas Azure serveris. Kiekviena sistemos dalis yra diegiama tame pačiame serveryje. Internetinė aplikacija yra pasiekiama per HTTP protokolą. Šios sistemos veikimui (pvz., duomenų manipuliavimui su duomenų baze) yra reikalingas HappyPaws API, kuris pasiekiamas per aplikacijų programavimo sąsają. Pats HappyPaws API vykdo duomenų mainus su duomenų baze - tam naudojama ORM sąsaja.
 
-![](RackMultipart20231231-1-313xqn_html_2b6ae7087d087e0c.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/8b206bac-1531-427e-a387-e8240d8a0145)
 
 **2.1 pav.** Sistemos HappyPaws diegimo diagrama
 
@@ -112,67 +112,67 @@ Sistemos sudedamosios dalys:
 
 Šiame skyriuje pateikiami projektuojamos vartotojo sąsajos wireframe'ai ir jų realizacijos langų iškarpos (3.1 – 3.16 pav.).
 
-![](RackMultipart20231231-1-313xqn_html_fec0534770b57e52.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/1ef58d1b-0ecb-426b-9e30-1103296e9964)
 
 **3.1 pav.** Pradinio lango wireframe
 
-![](RackMultipart20231231-1-313xqn_html_c5086008b80f6f3d.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/8b17ad17-3cd2-466c-9787-7e1e574538ba)
 
 **3.2 pav.** Pradinio lango realizacija
 
-![](RackMultipart20231231-1-313xqn_html_e434aa4f6db86ca6.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/bf4653db-d962-48cc-8538-363d78c211b2)
 
 **3.3 pav.** Registracijos lango wireframe
 
-![](RackMultipart20231231-1-313xqn_html_3110da6b8032049e.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/2cd57451-6652-4a9e-996e-45093f96e4a1)
 
 **3.4 pav.** Registracijos lango realizacija
 
-![](RackMultipart20231231-1-313xqn_html_44d2770eba53d2ec.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/28172274-eddd-4f84-b780-a6be0a31118a)
 
 **3.5 pav.** Prisijungimo lango wireframe
 
-![](RackMultipart20231231-1-313xqn_html_f4f577621c4f786d.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/abec17b8-466a-4c2e-8dfe-b01ff528588c)
 
 **3.6 pav.** Prisijungimo lango realizacija
 
-![](RackMultipart20231231-1-313xqn_html_f2af4780046eebb9.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/d8a0f460-2303-47cf-91db-c7078fd1bde0)
 
 **3.7 pav.** Paslaugų lango wireframe
 
-![](RackMultipart20231231-1-313xqn_html_e736113d67b8e0db.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/47230eba-210e-4360-ab81-18c43bc00495)
 
 **3.8 pav.** Paslaugų lango realizacija
 
-![](RackMultipart20231231-1-313xqn_html_c0f5ba60c731a568.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/06e11e4e-3987-4105-8011-59a8b93b576c)
 
 **3.9 pav.** Gydytojų lango wireframe
 
-![](RackMultipart20231231-1-313xqn_html_6d2233341503bfe9.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/07a2ab24-b02d-43d6-9d5a-311636f93fd8)
 
 **3.10 pav.** Gydytojų lango realizacija
 
-![](RackMultipart20231231-1-313xqn_html_d1d9ba6e203618c8.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/4313244f-71e2-4cd8-a5c2-0b0b279ad8f6)
 
 **3.11 pav.** Augintinių lango wireframe
 
-![](RackMultipart20231231-1-313xqn_html_6a398fbe27f08e63.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/4e27b8fd-45f7-48a7-973d-6e4af0ebf09f)
 
 **3.12 pav.** Augintinių lango realizacija
 
-![](RackMultipart20231231-1-313xqn_html_33784543d311fc16.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/4cba54f2-fc30-4815-a242-335015666e43)
 
 **3.13 pav.** Registracijų vizitams lango wireframe
 
-![](RackMultipart20231231-1-313xqn_html_ba8a6227ec03d6d.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/f3e95481-126b-4948-b562-2a9016f8a896)
 
 **3.14 pav.** Registracijų vizitams lango realizacija
 
-![](RackMultipart20231231-1-313xqn_html_f2af4780046eebb9.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/772c46eb-f092-4454-a25f-f47afa430fbb)
 
 **3.15 pav.** Gydytojų darbo laikų lango wireframe
 
-![](RackMultipart20231231-1-313xqn_html_86115679fc8ca140.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/ba65520b-a3d6-43e8-998a-bcba4f8943aa)
 
 **3.16 pav.** Gydytojų darbo laikų lango realizacija
 
@@ -990,153 +990,156 @@ Sistemos sudedamosios dalys:
 
 ## 4.2.Naudojimo pavyzdžiai
 
-Šiame skyriuje pateikiami visų metodų naudojimo pavyzdžiai naudojantis Swagger vartotojo sąsaja (4.1 – 4.37 pav.). Kiekviename paveikslėlyje matoma, kokia buvo užklausa ir koks statuso kodas bei atsako turinys grįžo.
+Šiame skyriuje pateikiami visų metodų naudojimo pavyzdžiai naudojantis Swagger vartotojo sąsaja (4.1 – 4.38 pav.). Kiekviename paveikslėlyje matoma, kokia buvo užklausa ir koks statuso kodas bei atsako turinys grįžo.
 
-![](RackMultipart20231231-1-313xqn_html_386587925bf15ecd.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/409d2b9d-43e4-4684-85d0-780eb1c88e31)
 
 **4.1 pav.** AppointmentProcedures GET metodas
 
-![](RackMultipart20231231-1-313xqn_html_2d850d5716918114.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/c065f780-d549-414d-9eef-618ff0ffa6b9)
 
 **4.2 pav.** AppointmentProcedures POST metodas
 
-![](RackMultipart20231231-1-313xqn_html_3edacf47c13c973f.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/fe703a7e-0c34-433e-baed-febefa266e51)
 
 **4.3 pav.** AppointmentProcedures GET pagal id metodas
 
-![](RackMultipart20231231-1-313xqn_html_3dbc9ea13eb0fda9.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/eff7a0aa-dfba-400e-b506-cbbf53b3a3be)
 
 **4.4 pav.** AppointmentProcedures PUT metodas
 
-![](RackMultipart20231231-1-313xqn_html_67891b7749f80c60.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/5961d39d-dec6-4e2a-95aa-7bd8702703cc)
 
 **4.5 pav.** AppointmentProcedures DELETE metodas
 
-![](RackMultipart20231231-1-313xqn_html_edc4e96f08d03cc4.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/1150beb7-dba5-46ba-87b3-4010e0fc03ab)
 
 **4.6 pav.** Appointment GET metodas
 
-![](RackMultipart20231231-1-313xqn_html_20742bddb691a012.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/bd1544dd-8a79-468d-9e91-a0917c3af67a)
 
 **4.7 pav.** Appointment POST metodas
 
-![](RackMultipart20231231-1-313xqn_html_450bc8b64766871f.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/f16b961a-dad0-429c-8d33-086198f90d3c)
 
 **4.8 pav.** Appointment GET pagal id metodas
 
-![](RackMultipart20231231-1-313xqn_html_c9da2e6f8dabf404.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/a3089390-4676-40bf-9946-cb67e75aa73b)
 
 **4.9 pav.** Appointment PUT metodas
 
-![](RackMultipart20231231-1-313xqn_html_d83698ea77e9b0e9.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/5e165087-21e8-4079-870f-e0ba4297b93c)
 
 **4.10 pav.** Appointment DELETE metodas
 
-![](RackMultipart20231231-1-313xqn_html_91a1882857274532.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/e8512935-c7ec-4c3e-a262-cd9ef276e798)
 
 **4.11 pav.** Auth prisijungimo metodas (POST)
 
-![](RackMultipart20231231-1-313xqn_html_b984f9fef1b99c.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/deae9326-5c2e-464a-aff7-41c249913299)
 
 **4.12 pav.** Auth registracijos metodas (POST)
 
-![](RackMultipart20231231-1-313xqn_html_b070594983b73d92.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/dc052ca4-ee6a-4a54-8704-07d0d14dc54b)
 
 **4.13 pav.** Auth dabartinio prisijungusio vartotojo metodas (GET)
 
-![](RackMultipart20231231-1-313xqn_html_409457a8bc078f89.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/14527ed8-8217-4685-8fc5-519e2de11ad4)
 
 **4.14 pav.** Auth atsijungimo metodas (POST)
 
-![](RackMultipart20231231-1-313xqn_html_652b64aabd7e98ba.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/751e6f4a-93ef-4677-aedc-eb8596c3a30a)
 
 **4.15 pav.** Note GET metodas
 
-![](RackMultipart20231231-1-313xqn_html_a900032501176ecc.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/57706b55-98bd-4efe-ba7f-1be3bdb18cee)
 
 **4.16 pav.** Note POST metodas
 
-![](RackMultipart20231231-1-313xqn_html_cafa2b3534b7facb.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/c5058705-22ed-478b-9a9f-513738b6ec84)
 
 **4.17 pav.** Note GET pagal id metodas
 
-![](RackMultipart20231231-1-313xqn_html_772e423ad0209361.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/89bf7b6c-8343-458b-aa44-9dda5847c34f)
 
 **4.18 pav.** Note PUT metodas
 
-![](RackMultipart20231231-1-313xqn_html_7d987bf8bebc701b.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/8992d147-43eb-4e0a-889d-14f4e296ff27)
 
 **4.19 pav.** Note DELETE metodas
 
-![](RackMultipart20231231-1-313xqn_html_fc6c4429311650d1.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/51a8a86c-d9d0-4099-8ff3-7077feadc049)
 
 **4.20 pav.** Pet GET metodas
 
-![](RackMultipart20231231-1-313xqn_html_dff9673b350b4b7b.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/d90f067a-a087-453d-8ab8-dd1026aafa44)
 
 **4.21 pav.** Pet POST metodas
 
-![](RackMultipart20231231-1-313xqn_html_ffef89e10b5ee9bc.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/86aa1485-7477-400c-b3e8-736fa752317b)
 
 **4.22 pav.** Pet GET pagal id metodas
 
-![](RackMultipart20231231-1-313xqn_html_61090e0570b9c4ec.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/ba5b712b-1653-4202-a566-50ee89918cb5)
 
 **4.23 pav.** Pet PUT metodas
 
-![](RackMultipart20231231-1-313xqn_html_83a24cf66c75200c.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/42d8f10d-0d87-4e36-9037-0c1698f49179)
 
 **4.24 pav.** Pet DELETE metodas
 
-![](RackMultipart20231231-1-313xqn_html_6338731e079e8beb.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/a39f0f42-6872-48e8-aef4-1f278ae29fc0)
 
 **4.25 pav.** Procedure GET metodas
 
-![](RackMultipart20231231-1-313xqn_html_1832e6b15b58e6c.png) **4.26 pav.** Procedure POST metodas
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/f1dba775-59a2-42cf-bc38-d8419559d215)
+ **4.26 pav.** Procedure POST metodas
 
-![](RackMultipart20231231-1-313xqn_html_554176413432a1a1.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/a3f74e23-f7b5-44bc-8ae2-bf321fdffb12)
 
 **4.27 pav.** Procedure GET pagal id metodas
 
-![](RackMultipart20231231-1-313xqn_html_d9f99ab08e2d3e90.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/3d58b09c-737c-4427-8afa-3770c67823d2)
 
 **4.28 pav.** Procedure PUT metodas
 
-![](RackMultipart20231231-1-313xqn_html_c06dd190a3e43eca.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/d55ca363-0b0e-45ba-9c6a-da1092ea88f2)
 
 **4.29 pav.** Procedure DELETE metodas
 
-![](RackMultipart20231231-1-313xqn_html_6c0832cfa6b5683b.png) **4.30 pav.** Timeslot GET metodas
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/07672505-f09a-4135-85c3-0a8d4ce0c806)
+ **4.30 pav.** Timeslot GET metodas
 
-![](RackMultipart20231231-1-313xqn_html_a1a96c749ac93c36.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/af744d2a-1619-4b93-b2d2-eddcc7653c0e)
 
 **4****.31 pav**. Timeslot POST metodas
 
-![](RackMultipart20231231-1-313xqn_html_db2ec6bbdc5021b2.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/d648d013-f194-43f3-ad0f-76a58c52a74b)
 
 **4****.32 pav**. Timeslot GET pagal id metodas
 
-![](RackMultipart20231231-1-313xqn_html_c36045e1320d5b68.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/5b0b9325-d4cc-4771-b0ab-921f23e09331)
 
 **4****.33 pav**. Timeslot PUT metodas
 
-![](RackMultipart20231231-1-313xqn_html_151a09d32e82cc41.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/5c98c3a6-f607-4305-abf6-f5ab4fa741df)
 
 **4****.34 pav**. Timeslot DELETE metodas
 
-![](RackMultipart20231231-1-313xqn_html_efd930298247c2d7.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/572f89e3-ca8d-4667-875e-242cf18ca124)
+**4****.35 pav.** User GET pagal id metodas
 
-![](RackMultipart20231231-1-313xqn_html_fef637032dcf602d.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/0463c938-e0c8-4eca-a284-3bc0c9e4cd6e)
 
-**4****.35 pav.** Timeslot GET metodas
+**4****.36 pav.** User GET metodas
 
-![](RackMultipart20231231-1-313xqn_html_df9197a4da99f5c0.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/af33c601-a45d-42d4-8f01-34097e3b9cc6)
 
-**4****.36 pav.** Timeslot PUT metodas
+**4****.37 pav.** User PUT metodas
 
-![](RackMultipart20231231-1-313xqn_html_2d41f0e9667e95e9.png)
+![image](https://github.com/emivai/happy-paws-pet-hospital/assets/83002035/d1dd14d0-8d0f-4ebe-b474-9f2c69086700)
 
-**4****.37 pav.** Timeslot DELETE metodas
+**4****.38 pav.** User DELETE metodas
 
 # 5.Išvados
 
