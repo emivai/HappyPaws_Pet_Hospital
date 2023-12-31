@@ -1,3 +1,5 @@
+#Happy Paws Pet Hospital
+
 **KAUNO TECHNOLOGIJOS UNIVERSITETAS**
 
 **INFORMATIKOS FAKULTETAS**
@@ -8,13 +10,9 @@ Laboratorinio darbo aprašas (ataskaita)
 
 **Projekto „Happy Paws Pet Hospital" ataskaita**
 
-|
- | **Dėstytojas** dėst.val. Baltulionis Simonas dėst.val. Lukošius Tomas |
-| --- | --- |
-|
- |
-| **Studentas** Emilija Vaisvalavičiūtė IFF-0/2
- |
+**Dėstytojas** dėst.val. Baltulionis Simonas dėst.val. Lukošius Tomas
+
+**Studentas** Emilija Vaisvalavičiūtė IFF-0/2
 
 **KAUNAS, 2023**
 
